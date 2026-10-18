@@ -117,10 +117,6 @@ export const App: React.FC = () => {
 
   const productService = ProductService.getInstance();
 
-  useEffect(() => {
-    loadData();
-  }, [selectedCategory, searchQuery, preferences, sortOption]);
-
   const loadData = async () => {
     setLoading(true);
     let results = await productService.search(searchQuery, selectedCategory, preferences);
@@ -154,6 +150,10 @@ export const App: React.FC = () => {
 
     setLoading(false);
   };
+
+  useEffect(() => {
+    loadData();
+  }, [selectedCategory, searchQuery, preferences, sortOption]);
 
   const handleToggleSave = (product: Product) => {
     setSavedProducts(prev => {

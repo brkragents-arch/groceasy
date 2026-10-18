@@ -3,9 +3,26 @@
  * Guaranteed 100% offline uptime, zero broken links, perfect matching shapes & labels.
  */
 
-export function getProductIllustration(name: string, subcategory: string, brand: string): string {
-  const sub = subcategory.toLowerCase();
-  const n = name.toLowerCase();
+export function getProductIllustration(
+  nameOrProduct: string | { name?: string; subcategory?: string; brand?: string },
+  subcategory?: string,
+  brandArg?: string
+): string {
+  let name = '';
+  let sub = '';
+  let brand = '';
+
+  if (typeof nameOrProduct === 'object' && nameOrProduct !== null) {
+    name = (nameOrProduct.name || '').toLowerCase();
+    sub = (nameOrProduct.subcategory || '').toLowerCase();
+    brand = nameOrProduct.brand || 'SAFE CHOICE';
+  } else {
+    name = (nameOrProduct || '').toLowerCase();
+    sub = (subcategory || '').toLowerCase();
+    brand = brandArg || 'SAFE CHOICE';
+  }
+
+  const n = name;
 
   // 1. SHAMPOOS & HAIRCARE
   if (sub.includes('shampoo') || n.includes('shampoo') || n.includes('cleanser') && n.includes('scalp')) {

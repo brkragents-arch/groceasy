@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Product } from '../types';
 import { formatInr, getScoreBadgeColor } from '../utils/formatters';
+import { getProductIllustration } from '../utils/productIllustration';
 import { 
   ArrowLeft, 
   ExternalLink, 
@@ -73,9 +74,7 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({
               onError={(e) => {
                 const target = e.currentTarget;
                 target.onerror = null;
-                import('../utils/productIllustration').then(({ getProductIllustration }) => {
-                  target.src = getProductIllustration(product.name, product.subcategory, product.brand);
-                });
+                target.src = getProductIllustration(product);
               }}
             />
           </div>

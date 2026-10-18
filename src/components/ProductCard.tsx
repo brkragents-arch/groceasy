@@ -2,6 +2,7 @@ import React from 'react';
 import type { Product } from '../types';
 import { formatInr, getScoreBadgeColor } from '../utils/formatters';
 import { ShieldCheck, ArrowRight, Bookmark } from 'lucide-react';
+import { getProductIllustration } from '../utils/productIllustration';
 
 interface ProductCardProps {
   product: Product;
@@ -37,9 +38,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           onError={(e) => {
             const target = e.currentTarget;
             target.onerror = null;
-            import('../utils/productIllustration').then(({ getProductIllustration }) => {
-              target.src = getProductIllustration(product.name, product.subcategory, product.brand);
-            });
+            target.src = getProductIllustration(product);
           }}
         />
 

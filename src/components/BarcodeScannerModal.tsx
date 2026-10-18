@@ -43,17 +43,13 @@ export const BarcodeScannerModal: React.FC<BarcodeScannerModalProps> = ({
     { label: 'PureRoots Mustard Oil', code: '8902500119922' }
   ];
 
-  useEffect(() => {
-    if (isOpen && activeTab === 'camera') {
-      startCamera();
-    } else {
-      stopCamera();
+  const stopCamera = () => {
+    if (streamRef.current) {
+      streamRef.current.getTracks().forEach(track => track.stop());
+      streamRef.current = null;
     }
-
-    return () => {
-      stopCamera();
-    };
-  }, [isOpen, activeTab]);
+    setIsScanning(false);
+  };
 
   const startCamera = async () => {
     setCameraError(null);
@@ -79,13 +75,17 @@ export const BarcodeScannerModal: React.FC<BarcodeScannerModalProps> = ({
     }
   };
 
-  const stopCamera = () => {
-    if (streamRef.current) {
-      streamRef.current.getTracks().forEach(track => track.stop());
-      streamRef.current = null;
+  useEffect(() => {
+    if (isOpen && activeTab === 'camera') {
+      startCamera();
+    } else {
+      stopCamera();
     }
-    setIsScanning(false);
-  };
+
+    return () => {
+      stopCamera();
+    };
+  }, [isOpen, activeTab]);
 
   const handleLookup = async (codeToLookup: string) => {
     const clean = codeToLookup.trim();
