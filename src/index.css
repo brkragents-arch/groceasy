@@ -1,0 +1,29 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --primary-forest: #173D35;
+    --primary-forest-dark: #0f2b25;
+    --primary-forest-light: #23584d;
+    --accent-sage: #8EA99A;
+    --accent-gold: #D4AF37;
+    --bg-cream: #F8F9F7;
+    --bg-card: #FFFFFF;
+  }
+  
+  body {
+    background-color: var(--bg-cream);
+    color: #1A202C;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+/* Custom scrollbar for horizontal categories */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
