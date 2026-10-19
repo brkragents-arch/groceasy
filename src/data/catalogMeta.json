@@ -1,0 +1,23 @@
+{
+  "schedule": "1st day of every month",
+  "cronExpression": "0 0 1 * *",
+  "lastAuditedDate": "2026-09-30",
+  "lastAuditedLabel": "1st October 2026",
+  "nextAuditDate": "2026-10-31",
+  "nextAuditLabel": "1st November 2026",
+  "totalVerifiedProducts": 160,
+  "amazonVerifiedImages": 183,
+  "departments": {
+    "food": 40,
+    "grocery": 40,
+    "personalCare": 80
+  },
+  "regulatoryStandardsAudited": [
+    "ICMR-NIN 2024 Dietary Guidelines for Indians (Refined Sugars, Palm Oil, Trans Fats)",
+    "FSSAI Food Safety and Standards (Food Products Standards & Food Additives Regulation)",
+    "Bureau of Indian Standards (BIS IS:4707 Ingredients in Cosmetics - Part 1 & Part 2)",
+    "Amazon India Direct Merchant Product Catalog & Verified ASINs"
+  ],
+  "status": "Verified & Current",
+  "updatedTimestamp": "2026-10-19T11:36:12.265Z"
+}

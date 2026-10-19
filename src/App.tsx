@@ -7,6 +7,7 @@ import { BarcodeScannerModal } from './components/BarcodeScannerModal';
 import { ManualAnalyzerModal } from './components/ManualAnalyzerModal';
 import { ProductComparisonModal } from './components/ProductComparisonModal';
 import { formatInr } from './utils/formatters';
+import catalogMeta from './data/catalogMeta.json';
 import { 
   Search, 
   ScanLine, 
@@ -30,7 +31,9 @@ import {
   ShoppingBag,
   Monitor,
   Smartphone,
-  X
+  X,
+  Calendar,
+  RefreshCw
 } from 'lucide-react';
 
 type MainSector = 'All' | 'FOOD' | 'GROCERY' | 'PERSONAL_CARE';
@@ -667,9 +670,12 @@ export const App: React.FC = () => {
                 renderTop20Ranking()
               ) : (
                 <div className="space-y-4">
-                  {/* Sort selection */}
+                  {/* Sort selection & monthly sync badge */}
                   <div className="flex items-center justify-between text-xs font-bold text-stone-700 px-1">
-                    <span>{products.length} Products Found</span>
+                    <span className="flex items-center gap-1 text-emerald-800 text-[11px] font-semibold bg-emerald-50 px-2 py-0.5 rounded-lg border border-emerald-200/60">
+                      <RefreshCw className="w-2.5 h-2.5 text-emerald-600" />
+                      <span>Auto-syncs 1st of month ({products.length})</span>
+                    </span>
                     <select
                       value={sortOption}
                       onChange={e => setSortOption(e.target.value as any)}
@@ -951,12 +957,17 @@ export const App: React.FC = () => {
           <div className="space-y-6">
             {/* Filter and Count Bar */}
             <div className="flex items-center justify-between flex-wrap gap-3 bg-white p-4 rounded-3xl border border-stone-200/80 shadow-xs">
-              <div className="flex items-center gap-2.5">
+              <div className="flex items-center gap-2.5 flex-wrap">
                 <span className="text-sm font-extrabold text-stone-900">
                   {selectedCategory === 'All' ? 'All Verified Indian Products' : selectedCategory}
                 </span>
                 <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-emerald-50 text-[#173D35] border border-emerald-200/70">
                   {products.length} Products
+                </span>
+                <span className="text-[11px] font-bold text-emerald-800 bg-emerald-100/70 px-2.5 py-0.5 rounded-full border border-emerald-300/80 flex items-center gap-1.5 shadow-xs">
+                  <RefreshCw className="w-3 h-3 text-emerald-700 animate-spin-slow" />
+                  <span>Auto-updated 1st of every month</span>
+                  <span className="text-emerald-700 font-medium hidden md:inline">• Last: {catalogMeta.lastAuditedLabel}</span>
                 </span>
               </div>
 

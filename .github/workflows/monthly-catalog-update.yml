@@ -1,0 +1,43 @@
+name: Monthly Verified Indian Products Catalog Update
+
+on:
+  schedule:
+    # Runs at 00:00 UTC on the 1st day of every month
+    - cron: '0 0 1 * *'
+  workflow_dispatch: # Allows manual trigger from GitHub Actions UI
+
+permissions:
+  contents: write
+
+jobs:
+  monthly-update:
+    name: Audit & Refresh Verified Indian Products
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Monthly Catalog Audit & Sync
+        run: node scripts/monthlyCatalogUpdate.cjs
+
+      - name: Validate TypeScript & Build
+        run: npm run build
+
+      - name: Commit and push monthly updates if changed
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add src/data/catalogMeta.json
+          git diff --quiet && git diff --staged --quiet || (git commit -m "chore(catalog): Monthly Verified Indian Products sync [skip ci]" && git push origin main)
