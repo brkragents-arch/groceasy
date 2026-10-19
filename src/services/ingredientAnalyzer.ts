@@ -78,6 +78,60 @@ export const INGREDIENT_KNOWLEDGE_BASE: IngredientRule[] = [
 
   // Cosmetics red / amber flags
   {
+    keywords: ['triclosan', 'triclocarban'],
+    risk: 'red',
+    concernType: 'Endocrine / Carcinogen',
+    reason: 'Toxic organohalogen antibacterial active linked to thyroid hormone disruption, endocrine interference, and antibiotic cross-resistance. Prohibited in consumer handwashes and strictly restricted in oral care.',
+    source: 'US FDA Rule on Antibacterial Washes & SCCS Evaluation',
+    exposureNote: 'Direct oral mucosal absorption in toothpastes and dentifrices.',
+    recommendation: 'Avoid completely; choose biocompatible antimicrobials like Lactoferrin or herbal bio-enzymes.'
+  },
+  {
+    keywords: ['polyethylene', 'microbeads', 'microplastic'],
+    risk: 'red',
+    concernType: 'General',
+    reason: 'Non-biodegradable synthetic plastic micro-particles. Banned in cosmetic dentifrices and exfoliators under BIS and UNEP regulations as they embed under gums causing chronic periodontitis.',
+    source: 'BIS IS:6356 Toothpaste Standards & UNEP Microplastics Ban',
+    exposureNote: 'Gingival entrapment and systemic microplastic retention.',
+    recommendation: 'Choose natural mineral polishing agents like gentle Hydrated Silica or biomimetic Nano-Hydroxyapatite.'
+  },
+  {
+    keywords: ['diethanolamine', 'dea', 'triethanolamine', 'tea', 'cocamide dea', 'lauramide dea'],
+    risk: 'red',
+    concernType: 'Endocrine / Carcinogen',
+    reason: 'Ethanolamine emulsifiers and foaming agents that can interact with nitrosating contaminants to form carcinogenic nitrosamines (NDEA).',
+    source: 'IARC Monographs & BIS IS:4707 Prohibited Cosmetic Ingredients',
+    exposureNote: 'Cumulative exposure through personal care cleansers and cosmetics.',
+    recommendation: 'Opt for non-ethoxylated amino acid cleansers (like Sodium Cocoyl Glycinate) or glucoside surfactants.'
+  },
+  {
+    keywords: ['phthalate', 'diethyl phthalate', 'dep', 'dibutyl phthalate', 'dbp'],
+    risk: 'red',
+    concernType: 'Endocrine / Carcinogen',
+    reason: 'Plasticizers and fragrance solvents identified as potent endocrine disruptors causing reproductive toxicity and hormonal disturbance.',
+    source: 'BIS IS:4707 & EU Cosmetic Regulation Annex II Prohibited List',
+    exposureNote: 'Systemic absorption via synthetic fragranced personal care and cosmetics.',
+    recommendation: 'Verify 100% phthalate-free or naturally fragranced formulations.'
+  },
+  {
+    keywords: ['bha', 'butylated hydroxyanisole', 'bht', 'butylated hydroxytoluene'],
+    risk: 'amber',
+    concernType: 'Endocrine / Carcinogen',
+    reason: 'Synthetic phenolic antioxidants used as preservatives; evidence indicates potential endocrine disruption and thyroid hormone modulation.',
+    source: 'IARC Group 2B & European Commission Endocrine Priority List',
+    exposureNote: 'Leave-on cosmetic creams and lip preparations.',
+    recommendation: 'Look for formulations preserved with natural Tocopherol (Vitamin E) or plant extracts.'
+  },
+  {
+    keywords: ['carrageenan'],
+    risk: 'amber',
+    concernType: 'General',
+    reason: 'Polysaccharide thickening gum; non-degraded form is generally recognized as safe, but degraded carrageenan can trigger oral mucosal and gut inflammation.',
+    source: 'World Health Organization (WHO) Technical Report',
+    exposureNote: 'Oral care pastes and food gels.',
+    recommendation: 'Prefer cellulose gum or xanthan gum binders in toothpastes.'
+  },
+  {
     keywords: ['paraben', 'methylparaben', 'propylparaben', 'butylparaben', 'isobutylparaben'],
     risk: 'amber',
     concernType: 'Endocrine / Carcinogen',
@@ -97,12 +151,12 @@ export const INGREDIENT_KNOWLEDGE_BASE: IngredientRule[] = [
   },
   {
     keywords: ['sodium lauryl sulfate', 'sls'],
-    risk: 'amber',
+    risk: 'red',
     concernType: 'Comedogenic / Irritation',
-    reason: 'Harsh anionic surfactant that can strip the skin lipid barrier, cause transepidermal water loss (TEWL), and irritate eyes and mucosal membranes.',
-    source: 'Cosmetic Ingredient Review (CIR) Expert Panel',
-    exposureNote: 'Common in foaming face washes, shampoos, and toothpastes.',
-    recommendation: 'Switch to gentler surfactants like Sodium Cocoyl Isethionate (SCI) or Coco-Glucoside.'
+    reason: 'Aggressive anionic detergent that strips protective oral mucin, causing mucosal desquamation and directly triggering recurrent aphthous stomatitis (canker sores). On skin, strips the natural lipid barrier.',
+    source: 'Journal of Clinical Periodontology & Cosmetic Ingredient Review (CIR)',
+    exposureNote: 'High oral mucosal contact during daily tooth brushing and shampooing.',
+    recommendation: 'Switch to 100% SLS-free formulas with gentle coconut taurates (Sodium Methyl Cocoyl Taurate) or betaines.'
   },
   {
     keywords: ['mineral oil', 'liquid paraffin', 'petrolatum', 'isoparaffin'],
@@ -114,10 +168,10 @@ export const INGREDIENT_KNOWLEDGE_BASE: IngredientRule[] = [
     recommendation: 'Avoid on acne-prone facial skin; safe for chapped lips and body elbows.'
   },
   {
-    keywords: ['formaldehyde releaser', 'dmdm hydantoin', 'imidazolidinyl urea', 'quaternium-15', 'bronopol'],
+    keywords: ['formaldehyde releaser', 'dmdm hydantoin', 'imidazolidinyl urea', 'diazolidinyl urea', 'quaternium-15', 'bronopol'],
     risk: 'red',
     concernType: 'Allergen / Sensitivity',
-    reason: 'Preservatives that slowly release micro-amounts of formaldehyde gas to prevent microbial contamination; established sensitizer and allergen.',
+    reason: 'Preservatives that slowly release micro-amounts of formaldehyde gas to prevent microbial contamination; established sensitizer, skin allergen, and classified carcinogen.',
     source: 'IARC Monograph & EU Cosmetic Regulation (EC) No 1223/2009',
     exposureNote: 'Leave-on cosmetic lotions, shampoos, and conditioners.',
     recommendation: 'Avoid if sensitive to formaldehyde or struggling with chronic dermatitis.'

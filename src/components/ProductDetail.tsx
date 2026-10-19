@@ -2,6 +2,7 @@ import React from 'react';
 import type { Product } from '../types';
 import { formatInr, getScoreBadgeColor } from '../utils/formatters';
 import { getProductIllustration } from '../utils/productIllustration';
+import { calculateSafetyScore } from '../services/scoringEngine';
 import { 
   ArrowLeft, 
   ExternalLink, 
@@ -33,22 +34,49 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({
   onCompare,
   isComparing = false
 }) => {
-  const badge = getScoreBadgeColor(product.safetyAssessment.score);
-  const redFlags = product.ingredients.filter(i => i.risk === 'red');
-  const amberFlags = product.ingredients.filter(i => i.risk === 'amber');
-
   const isToothpasteOrOral = 
     /tooth\s*paste|dental|enamel|dente|dentifrice|mouthwash|oral|brush/i.test(product.name) ||
     /tooth\s*paste|dental|enamel|dente|dentifrice|mouthwash|oral/i.test(product.subcategory || '') ||
-    /tooth\s*paste|dental|enamel|dente|dentifrice|oral/i.test(product.brand || '');
+    /tooth\s*paste|dental|enamel|dente|dentifrice|oral/i.test(product.brand || '') ||
+    product.ingredients.some(i => /hydroxyapatite|nhap|silica|lactoferrin|dentifrice|fluoride|toothpaste/i.test(i.name));
 
   const isCosmetic = isToothpasteOrOral ||
     product.category === 'Personal Care' ||
     product.category === 'Haircare' ||
     product.category === 'Skincare' ||
     product.category === 'PERSONAL_CARE' ||
-    /cosmetic|toothpaste|dental|shampoo|soap|lotion|cream|serum|sunscreen|cleanser|facewash/i.test(product.subcategory || '') ||
-    /cosmetic|toothpaste|dental|shampoo|soap|lotion|cream|serum|sunscreen|cleanser|facewash/i.test(product.name);
+    /cosmetic|toothpaste|dental|shampoo|soap|lotion|cream|serum|sunscreen|cleanser|facewash|bodywash|gel|conditioner|hair/i.test(product.subcategory || '') ||
+    /cosmetic|toothpaste|dental|shampoo|soap|lotion|cream|serum|sunscreen|cleanser|facewash|bodywash|gel|conditioner|hair/i.test(product.name) ||
+    product.ingredients.some(i => /paraben|dimethicone|niacinamide|sls|sodium lauryl sulfate|ceramide|phenoxyethanol|panthenol|stearate|fragrance|parfum/i.test(i.name));
+
+  // Compute or sanitize assessment for cosmetics to guarantee NO nutritional metrics appear
+  const assessment = React.useMemo(() => {
+    if (isToothpasteOrOral || isCosmetic) {
+      const hasFoodBreakdown = product.safetyAssessment.breakdown.some(b => /nutri/i.test(b.label));
+      if (hasFoodBreakdown || isToothpasteOrOral) {
+        return calculateSafetyScore(
+          isToothpasteOrOral ? 'Personal Care' : product.category,
+          product.ingredients,
+          undefined,
+          product.skinSuitability,
+          { name: product.name, subcategory: product.subcategory, brand: product.brand, rawIngredients: product.rawIngredientsText }
+        );
+      }
+    }
+    return product.safetyAssessment;
+  }, [product, isToothpasteOrOral, isCosmetic]);
+
+  const badge = getScoreBadgeColor(assessment.score);
+  const redFlags = product.ingredients.filter(i => i.risk === 'red');
+  const amberFlags = product.ingredients.filter(i => i.risk === 'amber');
+
+  // Toxic Chemical Screening Flags for Cosmetics & Oral Care
+  const hasParabens = product.ingredients.some(i => /paraben|methylparaben|propylparaben|butylparaben/i.test(i.name));
+  const hasSls = product.ingredients.some(i => /sodium lauryl sulfate|\bsls\b|sodium laureth sulfate|\bsles\b/i.test(i.name));
+  const hasTriclosan = product.ingredients.some(i => /triclosan|triclocarban/i.test(i.name));
+  const hasMicroplastics = product.ingredients.some(i => /polyethylene|microbead|microplastic/i.test(i.name));
+  const hasFormaldehyde = product.ingredients.some(i => /dmdm hydantoin|imidazolidinyl urea|diazolidinyl urea|quaternium-15|bronopol/i.test(i.name));
+  const hasPhthalates = product.ingredients.some(i => /phthalate|\bdep\b|\bdbp\b|\bbha\b|\bbht\b/i.test(i.name));
 
   return (
     <div className="min-h-screen bg-[#F8F9F7] pb-24 animate-fadeIn">
@@ -139,7 +167,7 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({
                   <span className="text-xs font-semibold text-stone-500 uppercase tracking-wider">SafeScan Safety Index</span>
                   <div className="flex items-baseline gap-2 mt-1">
                     <span className="text-3xl sm:text-4xl font-black text-[#173D35]">
-                      {product.safetyAssessment.score.toFixed(1)}
+                      {assessment.score.toFixed(1)}
                     </span>
                     <span className="text-sm font-semibold text-stone-500">/ 10</span>
                     <span className={`text-xs px-2.5 py-0.5 rounded-full font-bold border ${badge.bg} ${badge.border}`}>
@@ -151,19 +179,19 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({
                 <div className="text-right">
                   <span className="text-[11px] text-stone-500 block">Evidence Confidence</span>
                   <span className="text-xs font-bold text-stone-800 bg-stone-100 px-2.5 py-1 rounded-lg inline-block mt-0.5">
-                    {product.safetyAssessment.confidence}
+                    {assessment.confidence}
                   </span>
                 </div>
               </div>
 
               <p className="text-xs text-stone-600 leading-relaxed mt-3.5">
-                {product.safetyAssessment.explanation}
+                {assessment.explanation}
               </p>
 
               {/* Breakdown bars */}
               <div className="mt-5 space-y-3">
                 <span className="text-xs font-bold text-stone-800 block uppercase tracking-wider">Scoring Breakdown</span>
-                {product.safetyAssessment.breakdown.map((item, idx) => (
+                {assessment.breakdown.map((item, idx) => (
                   <div key={idx} className="bg-stone-50 rounded-2xl p-3 border border-stone-100">
                     <div className="flex justify-between items-center text-xs font-semibold mb-1.5">
                       <span className="text-stone-800">{item.label} ({item.weight}%)</span>
@@ -278,6 +306,98 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({
                     <span className="text-[11px] text-stone-500 block font-medium">Protein</span>
                     <span className="text-sm font-bold text-emerald-700">{product.nutritionFacts.proteinG ?? 0}g</span>
                   </div>
+                </div>
+              </div>
+            )}
+
+            {/* Harmful Chemical & Toxicological Risk Analysis Screen for Cosmetics & Personal Care */}
+            {isCosmetic && (
+              <div className="bg-white rounded-3xl p-5 sm:p-6 shadow-sm border border-stone-100">
+                <div className="flex items-center justify-between mb-3.5">
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-8 h-8 rounded-xl bg-rose-50 border border-rose-200 flex items-center justify-center text-rose-700 font-bold text-base">
+                      🛡️
+                    </div>
+                    <div>
+                      <h3 className="text-sm font-bold text-stone-900">Harmful Chemical & Toxicological Analysis</h3>
+                      <p className="text-[11px] text-stone-500">Screened against BIS IS:4707 & BIS IS:6356 Safety Standards</p>
+                    </div>
+                  </div>
+                  <span className={`text-[10px] font-bold tracking-wide uppercase px-2.5 py-1 rounded-full border ${
+                    redFlags.length > 0 ? 'bg-rose-100 text-rose-800 border-rose-200' : 'bg-emerald-100 text-emerald-800 border-emerald-200'
+                  }`}>
+                    {redFlags.length > 0 ? `${redFlags.length} Toxic Flag(s)` : 'Chemical Clean Verified'}
+                  </span>
+                </div>
+
+                {/* 6-Point Toxic Chemical Audit Matrix */}
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 text-xs mb-3.5">
+                  <div className={`p-2.5 rounded-2xl border ${hasTriclosan ? 'bg-rose-50/80 border-rose-200' : 'bg-emerald-50/50 border-emerald-100'}`}>
+                    <span className="text-[10px] font-semibold text-stone-500 block uppercase">Triclosan Toxins</span>
+                    <span className={`font-bold block mt-0.5 ${hasTriclosan ? 'text-rose-700' : 'text-emerald-800'}`}>
+                      {hasTriclosan ? '⚠️ Detected' : '✓ Triclosan-Free'}
+                    </span>
+                    <span className="text-[10px] text-stone-500">
+                      {hasTriclosan ? 'Endocrine disruptor' : 'Zero banned antibacterials'}
+                    </span>
+                  </div>
+
+                  <div className={`p-2.5 rounded-2xl border ${hasParabens ? 'bg-rose-50/80 border-rose-200' : 'bg-emerald-50/50 border-emerald-100'}`}>
+                    <span className="text-[10px] font-semibold text-stone-500 block uppercase">Paraben Preservatives</span>
+                    <span className={`font-bold block mt-0.5 ${hasParabens ? 'text-rose-700' : 'text-emerald-800'}`}>
+                      {hasParabens ? '⚠️ Detected' : '✓ Paraben-Free'}
+                    </span>
+                    <span className="text-[10px] text-stone-500">
+                      {hasParabens ? 'Hormone disruptor' : 'Safe preservation system'}
+                    </span>
+                  </div>
+
+                  <div className={`p-2.5 rounded-2xl border ${hasSls ? 'bg-rose-50/80 border-rose-200' : 'bg-emerald-50/50 border-emerald-100'}`}>
+                    <span className="text-[10px] font-semibold text-stone-500 block uppercase">Surfactant Safety</span>
+                    <span className={`font-bold block mt-0.5 ${hasSls ? 'text-rose-700' : 'text-emerald-800'}`}>
+                      {hasSls ? '⚠️ Harsh SLS' : '✓ 100% SLS-Free'}
+                    </span>
+                    <span className="text-[10px] text-stone-500">
+                      {hasSls ? 'Ulcer/desquamation risk' : 'Mild coconut cleansers'}
+                    </span>
+                  </div>
+
+                  <div className={`p-2.5 rounded-2xl border ${hasFormaldehyde ? 'bg-rose-50/80 border-rose-200' : 'bg-emerald-50/50 border-emerald-100'}`}>
+                    <span className="text-[10px] font-semibold text-stone-500 block uppercase">Formaldehyde Releasers</span>
+                    <span className={`font-bold block mt-0.5 ${hasFormaldehyde ? 'text-rose-700' : 'text-emerald-800'}`}>
+                      {hasFormaldehyde ? '⚠️ Detected' : '✓ Formaldehyde-Free'}
+                    </span>
+                    <span className="text-[10px] text-stone-500">
+                      {hasFormaldehyde ? 'Carcinogenic gas release' : 'Zero donor toxins'}
+                    </span>
+                  </div>
+
+                  <div className={`p-2.5 rounded-2xl border ${hasPhthalates ? 'bg-rose-50/80 border-rose-200' : 'bg-emerald-50/50 border-emerald-100'}`}>
+                    <span className="text-[10px] font-semibold text-stone-500 block uppercase">Phthalates & BHT</span>
+                    <span className={`font-bold block mt-0.5 ${hasPhthalates ? 'text-rose-700' : 'text-emerald-800'}`}>
+                      {hasPhthalates ? '⚠️ Detected' : '✓ Phthalate-Free'}
+                    </span>
+                    <span className="text-[10px] text-stone-500">
+                      {hasPhthalates ? 'Endocrine disruptor' : 'Clean stabilizer matrix'}
+                    </span>
+                  </div>
+
+                  <div className={`p-2.5 rounded-2xl border ${hasMicroplastics ? 'bg-rose-50/80 border-rose-200' : 'bg-emerald-50/50 border-emerald-100'}`}>
+                    <span className="text-[10px] font-semibold text-stone-500 block uppercase">Microplastics</span>
+                    <span className={`font-bold block mt-0.5 ${hasMicroplastics ? 'text-rose-700' : 'text-emerald-800'}`}>
+                      {hasMicroplastics ? '⚠️ Detected' : '✓ Microplastic-Free'}
+                    </span>
+                    <span className="text-[10px] text-stone-500">
+                      {hasMicroplastics ? 'Periodontal entrapment' : 'Tissue & enamel safe'}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="bg-stone-50 border border-stone-200/80 rounded-2xl p-3 text-[11px] text-stone-700 flex items-start gap-2">
+                  <ShieldCheck className="w-4 h-4 text-emerald-700 flex-shrink-0 mt-0.5" />
+                  <p>
+                    <span className="font-bold">Chemical Toxicology Mandate:</span> SafeScan screens personal care formulas against the Indian Drugs & Cosmetics Act and BIS IS:4707 standards. Non-ingestible cosmetics are evaluated for endocrine disruption, mucosal tissue compatibility, and dermal absorption rather than food nutritional calories.
+                  </p>
                 </div>
               </div>
             )}

@@ -15,7 +15,8 @@ function createProduct(
     data.category,
     analyzedIngredients,
     data.nutritionFacts,
-    data.skinSuitability
+    data.skinSuitability,
+    { name: data.name, subcategory: data.subcategory, brand: data.brand, rawIngredients: data.rawIngredients }
   );
 
   // Exact 1-to-1 matching Amazon product listing image

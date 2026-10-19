@@ -327,9 +327,19 @@ export const ManualAnalyzerModal: React.FC<ManualAnalyzerModalProps> = ({
             </label>
             <textarea
               rows={4}
-              placeholder="e.g. Water, Whole Wheat, Hydrogenated Vegetable Oil, Sugar, Added Flavours, Sodium Benzoate..."
+              placeholder="e.g. Aqua, Sorbitol, Hydrated Silica, Nano Hydroxyapatite, Glycerin, Sodium Methyl Cocoyl Taurate..."
               value={rawIngredients}
-              onChange={e => setRawIngredients(e.target.value)}
+              onChange={e => {
+                const val = e.target.value;
+                setRawIngredients(val);
+                if (/hydroxyapatite|dentifrice|silica|lactoferrin|toothpaste|sorbitol.*silica|fluoride/i.test(val)) {
+                  setCategory('Personal Care');
+                } else if (/dimethicone|cetrimonium|keratin|shampoo|conditioner/i.test(val)) {
+                  setCategory('Haircare');
+                } else if (/niacinamide|salicylic|hyaluronate|ceramide|retinol|spf|sunscreen|paraben|phenoxyethanol/i.test(val)) {
+                  setCategory('Skincare');
+                }
+              }}
               className="w-full bg-stone-50 border border-stone-200 rounded-xl p-3 text-xs focus:ring-2 focus:ring-[#173D35] outline-none"
               required
             />

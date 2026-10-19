@@ -161,12 +161,39 @@ export class ProductService {
     priceInr?: number;
     customIngredients?: any[];
   }): Product {
-    const isToothpasteOrOral = /tooth\s*paste|dental|enamel|dente|dentifrice|oral/i.test(params.name) || /tooth\s*paste|dental|enamel|dente/i.test(params.brand);
-    const resolvedCategory: CategoryType = isToothpasteOrOral ? 'Personal Care' : params.category;
-    const subcategory = isToothpasteOrOral ? 'Toothpastes & Oral Care' : 'Custom Analyzed Entry';
+    const isToothpasteOrOral = 
+      /tooth\s*paste|dental|enamel|dente|dentifrice|oral|mouthwash|brush/i.test(params.name) || 
+      /tooth\s*paste|dental|enamel|dente/i.test(params.brand) ||
+      /hydroxyapatite|silica|sorbitol|lactoferrin|dentifrice|fluoride/i.test(params.rawIngredients);
+
+    const isGeneralCosmetic = isToothpasteOrOral ||
+      params.category === 'Personal Care' ||
+      params.category === 'Haircare' ||
+      params.category === 'Skincare' ||
+      params.category === 'PERSONAL_CARE' ||
+      /shampoo|soap|lotion|cream|serum|sunscreen|cleanser|facewash|cosmetic|gel|conditioner|hair/i.test(params.name) ||
+      /dimethicone|cetearyl|niacinamide|paraben|sls|sodium lauryl sulfate|phenoxyethanol|panthenol/i.test(params.rawIngredients);
+
+    const resolvedCategory: CategoryType = isToothpasteOrOral 
+      ? 'Personal Care' 
+      : isGeneralCosmetic 
+        ? (params.category === 'Skincare' || params.category === 'Haircare' ? params.category : 'Personal Care')
+        : params.category;
+
+    const subcategory = isToothpasteOrOral 
+      ? 'Toothpastes & Oral Care' 
+      : isGeneralCosmetic 
+        ? 'Cosmetics & Personal Care' 
+        : 'Custom Analyzed Entry';
 
     const ingredients = params.customIngredients || analyzeIngredientText(params.rawIngredients);
-    const safetyAssessment = calculateSafetyScore(resolvedCategory, ingredients);
+    const safetyAssessment = calculateSafetyScore(
+      resolvedCategory,
+      ingredients,
+      undefined,
+      undefined,
+      { name: params.name, subcategory, brand: params.brand, rawIngredients: params.rawIngredients }
+    );
 
     // Dynamic matching SVG illustration
     const matchingThumbnail = getProductIllustration(params.name, resolvedCategory, params.brand);
