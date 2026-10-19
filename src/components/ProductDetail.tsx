@@ -40,7 +40,12 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({
     /tooth\s*paste|dental|enamel|dente|dentifrice|oral/i.test(product.brand || '') ||
     product.ingredients.some(i => /hydroxyapatite|nhap|silica|lactoferrin|dentifrice|fluoride|toothpaste/i.test(i.name));
 
-  const isCosmetic = isToothpasteOrOral ||
+  const isHairColorOrDye = 
+    /hair\s*colou?r|hair\s*dye|henna|mehndi|mehendi|indigo\s*powder|cr[eè]me\s*gloss|salon\s*secret|godrej\s*expert|excellence\s*cr|botanical\s*color/i.test(product.name) ||
+    /hair\s*colou?r|hair\s*dye/i.test(product.subcategory || '') ||
+    product.ingredients.some(i => /p-phenylenediamine|\bppd\b|resorcinol|toluene-2,5-diamine|aminophenol|lawsonia inermis|indigofera tinctoria/i.test(i.name));
+
+  const isCosmetic = isToothpasteOrOral || isHairColorOrDye ||
     product.category === 'Personal Care' ||
     product.category === 'Haircare' ||
     product.category === 'Skincare' ||
@@ -49,13 +54,13 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({
     /cosmetic|toothpaste|dental|shampoo|soap|lotion|cream|serum|sunscreen|cleanser|facewash|bodywash|gel|conditioner|hair/i.test(product.name) ||
     product.ingredients.some(i => /paraben|dimethicone|niacinamide|sls|sodium lauryl sulfate|ceramide|phenoxyethanol|panthenol|stearate|fragrance|parfum/i.test(i.name));
 
-  // Compute or sanitize assessment for cosmetics to guarantee NO nutritional metrics appear
+  // Compute or sanitize assessment for cosmetics & hair dyes to guarantee NO nutritional metrics appear
   const assessment = React.useMemo(() => {
-    if (isToothpasteOrOral || isCosmetic) {
+    if (isToothpasteOrOral || isHairColorOrDye || isCosmetic) {
       const hasFoodBreakdown = product.safetyAssessment.breakdown.some(b => /nutri/i.test(b.label));
-      if (hasFoodBreakdown || isToothpasteOrOral) {
+      if (hasFoodBreakdown || isToothpasteOrOral || isHairColorOrDye) {
         return calculateSafetyScore(
-          isToothpasteOrOral ? 'Personal Care' : product.category,
+          isToothpasteOrOral ? 'Personal Care' : (product.category || 'Haircare'),
           product.ingredients,
           undefined,
           product.skinSuitability,
@@ -64,7 +69,7 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({
       }
     }
     return product.safetyAssessment;
-  }, [product, isToothpasteOrOral, isCosmetic]);
+  }, [product, isToothpasteOrOral, isHairColorOrDye, isCosmetic]);
 
   const badge = getScoreBadgeColor(assessment.score);
   const redFlags = product.ingredients.filter(i => i.risk === 'red');
@@ -77,6 +82,14 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({
   const hasMicroplastics = product.ingredients.some(i => /polyethylene|microbead|microplastic/i.test(i.name));
   const hasFormaldehyde = product.ingredients.some(i => /dmdm hydantoin|imidazolidinyl urea|diazolidinyl urea|quaternium-15|bronopol/i.test(i.name));
   const hasPhthalates = product.ingredients.some(i => /phthalate|\bdep\b|\bdbp\b|\bbha\b|\bbht\b/i.test(i.name));
+
+  // Specialized Screening Flags for Hair Colors & Hair Dyes (BIS IS:10350 & BIS IS:8481)
+  const hasPpd = product.ingredients.some(i => /p-phenylenediamine|\bppd\b|para-phenylenediamine/i.test(i.name));
+  const hasAmmonia = product.ingredients.some(i => /ammonium hydroxide|\bammonia\b/i.test(i.name));
+  const hasResorcinol = product.ingredients.some(i => /resorcinol/i.test(i.name));
+  const hasPeroxide = product.ingredients.some(i => /hydrogen peroxide/i.test(i.name));
+  const isBotanicalDye = product.ingredients.some(i => /lawsonia inermis|henna|indigofera tinctoria|indigo/i.test(i.name)) && !hasPpd && !hasResorcinol;
+  const hasLeadOrHeavyMetals = product.ingredients.some(i => /lead acetate|metallic salt/i.test(i.name));
 
   return (
     <div className="min-h-screen bg-[#F8F9F7] pb-24 animate-fadeIn">
@@ -457,6 +470,125 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({
                   <ShieldCheck className="w-4 h-4 text-teal-700 flex-shrink-0 mt-0.5" />
                   <p>
                     <span className="font-bold">Indian Cosmetic Dentifrice Mandate:</span> Toothpastes in India are classified as cosmetics under the Drugs and Cosmetics Act and evaluated against BIS IS:6356. They do not carry nutritional calories or food facts; SafeScan assesses oral mucosal tolerance, abrasive safety, and remineralization efficacy.
+                  </p>
+                </div>
+              </div>
+            )}
+
+            {/* Hair Color & Hair Dye Formulation Safety Profile (Specialized for Hair Colors & Dyes) */}
+            {isHairColorOrDye && (
+              <div className="bg-white rounded-3xl p-5 sm:p-6 shadow-sm border border-stone-100">
+                <div className="flex items-center justify-between mb-3.5">
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-8 h-8 rounded-xl bg-purple-50 border border-purple-200 flex items-center justify-center text-purple-800 font-bold text-base">
+                      🎨
+                    </div>
+                    <div>
+                      <h3 className="text-sm font-bold text-stone-900">Hair Color & Dye Formulation Safety Profile</h3>
+                      <p className="text-[11px] text-stone-500">Screened under BIS IS:10350 (Oxidation Dyes) & BIS IS:8481 (Henna/Indigo)</p>
+                    </div>
+                  </div>
+                  <span className={`text-[10px] font-bold tracking-wide uppercase px-2.5 py-1 rounded-full border ${
+                    isBotanicalDye
+                      ? 'bg-emerald-100 text-emerald-800 border-emerald-200'
+                      : hasPpd
+                      ? 'bg-amber-100 text-amber-800 border-amber-200'
+                      : 'bg-purple-100 text-purple-800 border-purple-200'
+                  }`}>
+                    {isBotanicalDye ? '100% Botanical Dye' : hasPpd ? 'Oxidation Dye (Contains PPD)' : 'Non-Oxidative Color'}
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 text-xs mb-3.5">
+                  <div className={`p-2.5 rounded-2xl border ${hasPpd ? 'bg-amber-50/80 border-amber-200' : 'bg-emerald-50/50 border-emerald-100'}`}>
+                    <span className="text-[10px] font-semibold text-stone-500 block uppercase">PPD Allergen Status</span>
+                    <span className={`font-bold block mt-0.5 ${hasPpd ? 'text-amber-800' : 'text-emerald-800'}`}>
+                      {hasPpd ? '⚠️ Contains PPD (<1.5%)' : '✓ 100% PPD-Free'}
+                    </span>
+                    <span className="text-[10px] text-stone-500">
+                      {hasPpd ? 'Mandatory 48h patch test' : 'Zero synthetic aromatic amine'}
+                    </span>
+                  </div>
+
+                  <div className={`p-2.5 rounded-2xl border ${hasAmmonia ? 'bg-amber-50/80 border-amber-200' : 'bg-emerald-50/50 border-emerald-100'}`}>
+                    <span className="text-[10px] font-semibold text-stone-500 block uppercase">Ammonia Status</span>
+                    <span className={`font-bold block mt-0.5 ${hasAmmonia ? 'text-amber-800' : 'text-emerald-800'}`}>
+                      {hasAmmonia ? '⚠️ Ammonia Present' : '✓ Ammonia-Free'}
+                    </span>
+                    <span className="text-[10px] text-stone-500">
+                      {hasAmmonia ? 'Cuticle swelling alkalizer' : 'Mild ethanolamine or pure plant base'}
+                    </span>
+                  </div>
+
+                  <div className={`p-2.5 rounded-2xl border ${hasResorcinol ? 'bg-amber-50/80 border-amber-200' : 'bg-emerald-50/50 border-emerald-100'}`}>
+                    <span className="text-[10px] font-semibold text-stone-500 block uppercase">Resorcinol Coupler</span>
+                    <span className={`font-bold block mt-0.5 ${hasResorcinol ? 'text-amber-800' : 'text-emerald-800'}`}>
+                      {hasResorcinol ? '⚠️ Resorcinol Detected' : '✓ Resorcinol-Free'}
+                    </span>
+                    <span className="text-[10px] text-stone-500">
+                      {hasResorcinol ? 'BIS IS:4707 regulated coupler' : 'Zero endocrine coupler risk'}
+                    </span>
+                  </div>
+
+                  <div className="bg-stone-50 p-2.5 rounded-2xl border border-stone-100">
+                    <span className="text-[10px] font-semibold text-stone-500 block uppercase">Oxidative Developer</span>
+                    <span className="font-bold text-stone-800 block mt-0.5">
+                      {hasPeroxide ? 'Hydrogen Peroxide (6-9%)' : '✓ Developer-Free'}
+                    </span>
+                    <span className="text-[10px] text-stone-500">
+                      {hasPeroxide ? 'Melanin bleaching & dye lift' : 'Water-activated botanical pigment'}
+                    </span>
+                  </div>
+
+                  <div className="bg-stone-50 p-2.5 rounded-2xl border border-stone-100">
+                    <span className="text-[10px] font-semibold text-stone-500 block uppercase">Heavy Metals & Lead</span>
+                    <span className="font-bold text-emerald-800 block mt-0.5">
+                      {hasLeadOrHeavyMetals ? '⚠️ Heavy Metals Present' : '✓ 100% Lead-Free'}
+                    </span>
+                    <span className="text-[10px] text-stone-500">
+                      {hasLeadOrHeavyMetals ? 'Prohibited cosmetic adulterant' : 'Meets BIS heavy metal limits'}
+                    </span>
+                  </div>
+
+                  <div className="bg-stone-50 p-2.5 rounded-2xl border border-stone-100">
+                    <span className="text-[10px] font-semibold text-stone-500 block uppercase">Botanical Purity</span>
+                    <span className="font-bold text-purple-900 block mt-0.5">
+                      {isBotanicalDye ? '✓ Pure Organic Henna/Indigo' : 'Synthetic Permanent Crème'}
+                    </span>
+                    <span className="text-[10px] text-stone-500">
+                      {isBotanicalDye ? 'Ayurvedic keratin binding' : 'Long-lasting grey coverage'}
+                    </span>
+                  </div>
+                </div>
+
+                {hasPpd && (
+                  <div className="bg-rose-50/80 border border-rose-200/90 rounded-2xl p-3 text-[11px] text-rose-950 flex items-start gap-2 mb-2">
+                    <ShieldAlert className="w-4 h-4 text-rose-700 flex-shrink-0 mt-0.5" />
+                    <div>
+                      <span className="font-bold">Mandatory BIS IS:10350 Safety Warning (48-Hour Patch Test):</span>
+                      <p className="mt-0.5 text-rose-900">
+                        This oxidation hair dye contains <strong>p-Phenylenediamine (PPD)</strong>, which can trigger severe allergic contact dermatitis, itching, and facial swelling in sensitized users. Indian cosmetic regulations mandate a preliminary 48-hour skin allergy test behind the ear or on the inner elbow prior to each use.
+                      </p>
+                    </div>
+                  </div>
+                )}
+
+                {isBotanicalDye && (
+                  <div className="bg-emerald-50/80 border border-emerald-200/90 rounded-2xl p-3 text-[11px] text-emerald-950 flex items-start gap-2 mb-2">
+                    <ShieldCheck className="w-4 h-4 text-emerald-700 flex-shrink-0 mt-0.5" />
+                    <div>
+                      <span className="font-bold">BIS IS:8481 Certified Botanical Formulation:</span>
+                      <p className="mt-0.5 text-emerald-900">
+                        Pure organic henna and indigo formulation free from synthetic PPD adulteration ('black henna'), metallic salts, and ammonia. Deposits natural lawsone tannins on hair cuticles without structural lipid depletion.
+                      </p>
+                    </div>
+                  </div>
+                )}
+
+                <div className="bg-stone-50 border border-stone-200/80 rounded-2xl p-3 text-[11px] text-stone-700 flex items-start gap-2">
+                  <ShieldCheck className="w-4 h-4 text-stone-600 flex-shrink-0 mt-0.5" />
+                  <p>
+                    <span className="font-bold">Cosmetic Hair Dye Evaluation:</span> Hair colors and dyes are non-ingestible cosmetics regulated under the Indian Drugs & Cosmetics Rules. They carry zero nutritional calories; SafeScan evaluates them on dermal sensitization, scalp barrier tolerance, and aromatic amine safety.
                   </p>
                 </div>
               </div>

@@ -361,6 +361,108 @@ export const MOCK_PRODUCTS: Product[] = [
   }, 19),
 
   // =========================================================================
+  // HAIR COLORS & HAIR DYES (Haircare -> Hair Color & Dyes)
+  // Evaluated under BIS IS:10350 (Oxidation Hair Dyes) and BIS IS:8481 (Henna/Indigo)
+  // Cosmetic formulation evaluation: strictly no food nutrition facts
+  // =========================================================================
+  createProduct({
+    id: 'haircolor-loreal-excellence',
+    barcode: '8901526002011',
+    name: "L'Oreal Paris Excellence Crème Permanent Triple Care Hair Color - Natural Black 1",
+    brand: "L'Oreal Paris",
+    category: 'Haircare',
+    subcategory: 'Hair Color & Dyes',
+    packageSize: '72 ml + 100 g',
+    priceInr: 630,
+    thumbnailUrl: 'https://m.media-amazon.com/images/I/71Y8K-UomKL._SL1500_.jpg',
+    rawIngredients: 'Aqua, Cetearyl Alcohol, Propylene Glycol, Deceth-3, Laureth-12, Ammonium Hydroxide, Oleth-30, Hexadimethrine Chloride, Lauric Acid, Glycol Distearate, Polyquaternium-22, Ethanolamine, Silica Dimethyl Silylate, CI 77891, p-Phenylenediamine, 2,4-Diaminophenoxyethanol HCl, m-Aminophenol, Ascorbic Acid, Sodium Metabisulfite, Resorcinol, Dimethicone, Pentasodium Pentetate, Linalool, Proline, Carbomer, Threonine, Parfum, Hydrogen Peroxide',
+    skinSuitability: { skinTypes: ['Combination', 'Dry'], comedogenicRating: 2, fragranceFree: false, sulfateFree: true, parabenFree: true },
+    declaredAllergens: ['p-Phenylenediamine (PPD)', 'Resorcinol', 'Ammonium Hydroxide', 'Sodium Metabisulfite', 'Hydrogen Peroxide'],
+    retailerName: 'Amazon India',
+    retailerUrl: 'https://www.amazon.in/dp/B006LXBEYU'
+  }),
+  createProduct({
+    id: 'haircolor-garnier-naturals',
+    barcode: '8901526101127',
+    name: 'Garnier Color Naturals Crème Permanent Hair Color - Natural Black 1 (Ammonia-Free)',
+    brand: 'Garnier',
+    category: 'Haircare',
+    subcategory: 'Hair Color & Dyes',
+    packageSize: '70 ml + 60 g',
+    priceInr: 219,
+    thumbnailUrl: 'https://m.media-amazon.com/images/I/717iCqS77mL._SL1500_.jpg',
+    rawIngredients: 'Aqua, Cetearyl Alcohol, Ethanolamine, Mineral Oil, Laureth-4, Laureth-12, Oleth-30, p-Phenylenediamine, Resorcinol, 2,4-Diaminophenoxyethanol HCl, m-Aminophenol, Ascorbic Acid, Sodium Metabisulfite, Olive Fruit Oil, Avocado Oil, Shea Butter, Hydrogen Peroxide, Parfum',
+    skinSuitability: { skinTypes: ['Sensitive', 'Dry', 'Oily'], comedogenicRating: 2, fragranceFree: false, sulfateFree: true, parabenFree: true },
+    declaredAllergens: ['p-Phenylenediamine (PPD)', 'Resorcinol', 'Sodium Metabisulfite', 'Hydrogen Peroxide'],
+    retailerName: 'Amazon India',
+    retailerUrl: 'https://www.amazon.in/dp/B00791CO5W'
+  }),
+  createProduct({
+    id: 'haircolor-indus-valley',
+    barcode: '8906047240182',
+    name: 'Indus Valley Bio-Organic 100% Botanical Natural Hair Color - Dark Brown',
+    brand: 'Indus Valley',
+    category: 'Haircare',
+    subcategory: 'Hair Color & Dyes',
+    packageSize: '100 g',
+    priceInr: 315,
+    thumbnailUrl: 'https://m.media-amazon.com/images/I/71s+m3q7-8L._SL1500_.jpg',
+    rawIngredients: 'Certified Organic Lawsonia Inermis (Henna) Leaf Powder, Certified Organic Indigofera Tinctoria (Indigo) Leaf Powder, Emblica Officinalis (Amla) Fruit Powder, Cassia Auriculata (Colorless Henna) Leaf Powder, Acacia Concinna (Shikakai) Fruit Powder, Brahmi Leaf Powder, Fenugreek Seed Powder',
+    skinSuitability: { skinTypes: ['Sensitive', 'Dry', 'Oily', 'Combination'], comedogenicRating: 0, fragranceFree: true, sulfateFree: true, parabenFree: true },
+    declaredAllergens: [],
+    retailerName: 'Amazon India',
+    retailerUrl: 'https://www.amazon.in/dp/B008KH2F5W'
+  }),
+  createProduct({
+    id: 'haircolor-bblunt-salonsecret',
+    barcode: '8906087771238',
+    name: 'BBLUNT Salon Secret High Shine Crème Hair Colour - Coffee Natural Brown 4.31',
+    brand: 'BBLUNT',
+    category: 'Haircare',
+    subcategory: 'Hair Color & Dyes',
+    packageSize: '100 g + 8 ml Shine Tonic',
+    priceInr: 249,
+    thumbnailUrl: 'https://m.media-amazon.com/images/I/719FvE+UooL._SL1500_.jpg',
+    rawIngredients: 'Aqua, Cetearyl Alcohol, Ethanolamine, Ceteareth-20, Paraffinum Liquidum, p-Phenylenediamine, Resorcinol, m-Aminophenol, 2,4-Diaminophenoxyethanol HCl, Silk Protein, Sodium Metabisulfite, Ascorbic Acid, Polyquaternium-39, Hydrogen Peroxide, Parfum',
+    skinSuitability: { skinTypes: ['Combination', 'Dry'], comedogenicRating: 2, fragranceFree: false, sulfateFree: true, parabenFree: true },
+    declaredAllergens: ['p-Phenylenediamine (PPD)', 'Resorcinol', 'm-Aminophenol', 'Sodium Metabisulfite', 'Hydrogen Peroxide'],
+    retailerName: 'Amazon India',
+    retailerUrl: 'https://www.amazon.in/dp/B01MT2G9C9'
+  }),
+  createProduct({
+    id: 'haircolor-godrej-expert',
+    barcode: '8901023023019',
+    name: 'Godrej Expert Rich Crème Hair Colour - Natural Black 1.00 (No Ammonia)',
+    brand: 'Godrej Expert',
+    category: 'Haircare',
+    subcategory: 'Hair Color & Dyes',
+    packageSize: '20 g + 20 ml Sachet',
+    priceInr: 39,
+    thumbnailUrl: 'https://m.media-amazon.com/images/I/61k1J7FzJIL._SL1500_.jpg',
+    rawIngredients: 'Aqua, Cetostearyl Alcohol, Ethanolamine, Ceteareth-20, Liquid Paraffin, p-Phenylenediamine, Resorcinol, Aloe Barbadensis Leaf Juice, Milk Protein, Sodium Sulphite, Ascorbic Acid, Hydrogen Peroxide, Disodium EDTA, Parfum',
+    skinSuitability: { skinTypes: ['Sensitive', 'Combination'], comedogenicRating: 2, fragranceFree: false, sulfateFree: true, parabenFree: true },
+    declaredAllergens: ['p-Phenylenediamine (PPD)', 'Resorcinol', 'Sodium Sulphite', 'Hydrogen Peroxide'],
+    retailerName: 'Amazon India',
+    retailerUrl: 'https://www.amazon.in/dp/B00V4L5S66'
+  }),
+  createProduct({
+    id: 'haircolor-kama-henna-indigo',
+    barcode: '8906014831201',
+    name: 'Kama Ayurveda Organic Certified Pure Henna & Indigo Botanical Hair Dye Kit',
+    brand: 'Kama Ayurveda',
+    category: 'Haircare',
+    subcategory: 'Hair Color & Dyes',
+    packageSize: '200 g (Henna + Indigo)',
+    priceInr: 1250,
+    thumbnailUrl: 'https://m.media-amazon.com/images/I/71Y7y6Z1-SL._SL1500_.jpg',
+    rawIngredients: '100% Pure Certified Organic Lawsonia Inermis (Henna) Leaf Powder, 100% Pure Certified Organic Indigofera Tinctoria (Indigo) Leaf Powder',
+    skinSuitability: { skinTypes: ['Sensitive', 'Dry', 'Oily', 'Combination'], comedogenicRating: 0, fragranceFree: true, sulfateFree: true, parabenFree: true },
+    declaredAllergens: [],
+    retailerName: 'Amazon India',
+    retailerUrl: 'https://www.amazon.in/dp/B01N0P6Z0X'
+  }),
+
+  // =========================================================================
   // ORAL CARE & DENTAL COSMETICS (Personal Care -> Toothpastes & Oral Care)
   // =========================================================================
   createProduct({

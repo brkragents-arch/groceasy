@@ -79,6 +79,7 @@ export class MockIndianMarketProvider implements ProductProvider {
         if ((q === 'beverage' || q === 'beverages' || q === 'juice' || q === 'juices' || q === 'drink' || q === 'drinks') && product.category === 'Beverages & Juices') matchesSearch = true;
         if ((q === 'staple' || q === 'staples' || q === 'millet' || q === 'millets' || q === 'atta' || q === 'dal') && product.category === 'Staples & Millets') matchesSearch = true;
         if ((q === 'toothpaste' || q === 'tooth paste' || q === 'oral care' || q === 'dentifrice' || q === 'dente' || q === 'dente91' || q === 'enamel') && (product.category === 'Personal Care' || product.subcategory.toLowerCase().includes('toothpaste') || product.name.toLowerCase().includes('dente') || product.name.toLowerCase().includes('toothpaste'))) matchesSearch = true;
+        if ((q === 'hair color' || q === 'hair colour' || q === 'hair dye' || q === 'hair dyes' || q === 'dye' || q === 'dyes' || q === 'henna' || q === 'mehndi' || q === 'mehendi' || q === 'indigo' || q === 'hair') && (product.category === 'Haircare' || product.subcategory.toLowerCase().includes('hair color') || product.name.toLowerCase().includes('color') || product.name.toLowerCase().includes('colour') || product.name.toLowerCase().includes('dye') || product.name.toLowerCase().includes('henna'))) matchesSearch = true;
       }
 
       return matchesSearch;
@@ -166,7 +167,11 @@ export class ProductService {
       /tooth\s*paste|dental|enamel|dente/i.test(params.brand) ||
       /hydroxyapatite|silica|sorbitol|lactoferrin|dentifrice|fluoride/i.test(params.rawIngredients);
 
-    const isGeneralCosmetic = isToothpasteOrOral ||
+    const isHairColorOrDye = 
+      /hair\s*colou?r|hair\s*dye|henna|mehndi|mehendi|indigo\s*powder|salon\s*secret|godrej\s*expert|excellence\s*cr|botanical\s*color/i.test(params.name) ||
+      /p-phenylenediamine|\bppd\b|resorcinol|toluene-2,5-diamine|lawsonia inermis|indigofera tinctoria/i.test(params.rawIngredients);
+
+    const isGeneralCosmetic = isToothpasteOrOral || isHairColorOrDye ||
       params.category === 'Personal Care' ||
       params.category === 'Haircare' ||
       params.category === 'Skincare' ||
@@ -176,15 +181,19 @@ export class ProductService {
 
     const resolvedCategory: CategoryType = isToothpasteOrOral 
       ? 'Personal Care' 
-      : isGeneralCosmetic 
-        ? (params.category === 'Skincare' || params.category === 'Haircare' ? params.category : 'Personal Care')
-        : params.category;
+      : isHairColorOrDye
+        ? 'Haircare'
+        : isGeneralCosmetic 
+          ? (params.category === 'Skincare' || params.category === 'Haircare' ? params.category : 'Personal Care')
+          : params.category;
 
     const subcategory = isToothpasteOrOral 
       ? 'Toothpastes & Oral Care' 
-      : isGeneralCosmetic 
-        ? 'Cosmetics & Personal Care' 
-        : 'Custom Analyzed Entry';
+      : isHairColorOrDye
+        ? 'Hair Color & Dyes'
+        : isGeneralCosmetic 
+          ? 'Cosmetics & Personal Care' 
+          : 'Custom Analyzed Entry';
 
     const ingredients = params.customIngredients || analyzeIngredientText(params.rawIngredients);
     const safetyAssessment = calculateSafetyScore(

@@ -119,6 +119,16 @@ export const ManualAnalyzerModal: React.FC<ManualAnalyzerModalProps> = ({
       ingredients: 'Nano Hydroxyapatite, Lactoferrin, Sorbitol, Hydrated Silica, Glycerin, PEG-8, Cocamidopropyl Betaine, Sodium Methyl Cocoyl Taurate, Xanthan Gum, Menthol, Titanium Dioxide, Sodium Saccharin, Sodium Benzoate'
     },
     {
+      title: "L'Oreal Excellence Crème Hair Color (PPD & Resorcinol)",
+      cat: 'Haircare' as CategoryType,
+      ingredients: 'Aqua, Cetearyl Alcohol, Propylene Glycol, Ammonium Hydroxide, p-Phenylenediamine, Resorcinol, 2,4-Diaminophenoxyethanol HCl, m-Aminophenol, Sodium Metabisulfite, Hydrogen Peroxide, Parfum'
+    },
+    {
+      title: 'Indus Valley 100% Botanical Hair Color (Pure Henna & Indigo)',
+      cat: 'Haircare' as CategoryType,
+      ingredients: 'Lawsonia Inermis (Henna) Leaf Powder, Indigofera Tinctoria (Indigo) Leaf Powder, Emblica Officinalis (Amla) Fruit Powder, Cassia Auriculata Leaf Powder'
+    },
+    {
       title: 'Sample Snack with Vanaspati & MSG',
       cat: 'Packaged Food' as CategoryType,
       ingredients: 'Refined Wheat Flour, Hydrogenated Vegetable Oil (Vanaspati), Monosodium Glutamate, High Fructose Corn Syrup, Permitted Food Color INS 102'
@@ -261,7 +271,7 @@ export const ManualAnalyzerModal: React.FC<ManualAnalyzerModalProps> = ({
                   setName(val);
                   if (/tooth\s*paste|dental|enamel|dente|dentifrice|oral|mouthwash/i.test(val)) {
                     setCategory('Personal Care');
-                  } else if (/shampoo|conditioner|hair\s*oil/i.test(val)) {
+                  } else if (/shampoo|conditioner|hair\s*oil|hair\s*colou?r|hair\s*dye|henna|mehndi|mehendi|indigo/i.test(val)) {
                     setCategory('Haircare');
                   } else if (/serum|lotion|cream|moisturizer|sunscreen|cleanser|facewash/i.test(val)) {
                     setCategory('Skincare');

@@ -222,6 +222,107 @@ export const INGREDIENT_KNOWLEDGE_BASE: IngredientRule[] = [
     recommendation: 'Limit use to 2-3 times weekly and alternate with a gentle moisturizing cleanser.'
   },
 
+  // Hair Color & Hair Dye specific rules (BIS IS:4707, IS:10350 & IS:8481)
+  {
+    keywords: ['p-phenylenediamine', 'ppd', 'para-phenylenediamine', '1,4-diaminobenzene'],
+    risk: 'red',
+    concernType: 'Allergen / Sensitivity',
+    reason: 'Potent aromatic amine oxidation dye intermediate and primary cosmetic contact allergen globally. Capable of causing severe allergic contact dermatitis, acute facial and eyelid edema, and scalp blistering. Maximum permissible concentration in finished cosmetic hair dye is strictly 1.5% under Indian Bureau of Standards BIS IS:4707 and EU CosIng. Mandatory 48-hour allergy patch test required before every application.',
+    source: 'BIS IS:4707 (Part 2) Schedule E & EU Cosmetic Regulation Annex III',
+    exposureNote: 'Direct scalp contact and hair cortex penetration during oxidative hair coloring.',
+    recommendation: 'Perform a 48-hour behind-ear patch test before every use. Never use on broken scalp or eyebrows. If sensitive, switch to 100% certified organic botanical Henna and Indigo.'
+  },
+  {
+    keywords: ['resorcinol', '1,3-benzenediol'],
+    risk: 'amber',
+    concernType: 'Endocrine / Carcinogen',
+    reason: 'Oxidative coupler chemical used to develop black and dark brown tones. Evidence indicates potential thyroid peroxidase inhibition and endocrine disruption with repeated systemic absorption; moderate skin sensitizer.',
+    source: 'European Chemicals Agency (ECHA) & BIS IS:4707 Permissible Limits',
+    exposureNote: 'Scalp contact during permanent oxidation coloring.',
+    recommendation: 'Ensure thorough rinsing and limit processing time strictly to manufacturer guidelines.'
+  },
+  {
+    keywords: ['ammonium hydroxide', 'ammonia'],
+    risk: 'amber',
+    concernType: 'Comedogenic / Irritation',
+    reason: 'High-alkalinity agent (pH ~10-11) used to lift and swell hair cuticles for pigment deposit. Fumes irritate mucous membranes and eyes; causes scalp stinging, burning, and increased cuticle porosity and dryness.',
+    source: 'Cosmetic Ingredient Review (CIR) & SCCS Scientific Opinions',
+    exposureNote: 'Inhalation of pungent vapors and direct scalp contact during color application.',
+    recommendation: 'Choose ammonia-free crème hair colors using mild ethanolamine or pure plant henna.'
+  },
+  {
+    keywords: ['toluene-2,5-diamine', 'ptd', 'toluene-2,5-diamine sulfate'],
+    risk: 'amber',
+    concernType: 'Allergen / Sensitivity',
+    reason: 'Aromatic amine developer used as a substitute for PPD in some hair dyes. While exhibiting a marginally lower sensitization frequency than PPD, it remains a potent contact allergen capable of triggering severe dermatitis.',
+    source: 'Scientific Committee on Consumer Safety (SCCS) & BIS IS:4707',
+    exposureNote: 'Scalp penetration in permanent hair colors.',
+    recommendation: 'Requires mandatory 48-hour patch test prior to each application.'
+  },
+  {
+    keywords: ['m-aminophenol', 'p-aminophenol', '2,4-diaminophenoxyethanol'],
+    risk: 'amber',
+    concernType: 'Allergen / Sensitivity',
+    reason: 'Oxidation hair dye color couplers and intermediates; regulated under BIS IS:4707 Part 2 with specific purity criteria and concentration thresholds to limit sensitization risk.',
+    source: 'Indian Bureau of Standards BIS IS:4707 & EU CosIng',
+    exposureNote: 'Chemical permanent hair coloring.',
+    recommendation: 'Safe when formulated within regulatory cosmetic thresholds.'
+  },
+  {
+    keywords: ['hydrogen peroxide'],
+    risk: 'amber',
+    concernType: 'Comedogenic / Irritation',
+    reason: 'Oxidizing developer that lightens melanin and activates color precursors. In high concentrations (above 20-30 volume), it causes hair shaft protein degradation and scalp burning.',
+    source: 'Cosmetic Ingredient Review (CIR) & BIS IS:10350',
+    exposureNote: 'Oxidative developer lotion in hair color kits.',
+    recommendation: 'Use gentle 20-volume (6%) developer; avoid contact with bare skin.'
+  },
+  {
+    keywords: ['lead acetate', 'metallic salts', 'silver nitrate'],
+    risk: 'red',
+    concernType: 'Endocrine / Carcinogen',
+    reason: 'Progressive heavy metal metallic salts historically used in dark hair restorers. Lead is a potent neurotoxin and reproductive poison. Strictly prohibited in cosmetic hair preparations under BIS IS:4707 and US FDA.',
+    source: 'BIS IS:4707 (Part 1) Prohibited List & US FDA Cosmetic Ban',
+    exposureNote: 'Systemic heavy metal bioaccumulation.',
+    recommendation: 'Prohibited in modern cosmetics; never use uncertified metallic salt dyes.'
+  },
+  {
+    keywords: ['sodium metabisulfite', 'sodium sulfite', 'sodium hydrosulfite'],
+    risk: 'amber',
+    concernType: 'Allergen / Sensitivity',
+    reason: 'Antioxidant reducing agent used to prevent premature oxidation of dye precursors in the tube; can trigger bronchospasm or contact urticaria in sulfite-sensitive asthmatic individuals.',
+    source: 'FSSAI & SCCS Cosmetic Safety Evaluations',
+    exposureNote: 'Hair color crèmes and lotions.',
+    recommendation: 'Perform patch test; avoid if you have documented sulfite sensitivities.'
+  },
+  {
+    keywords: ['lawsonia inermis', 'henna', 'mehndi', 'mehendi'],
+    risk: 'green',
+    concernType: 'General',
+    reason: 'Pure natural botanical leaf powder rich in lawsone (2-hydroxy-1,4-naphthoquinone). Coats and binds naturally to hair keratin cuticles, providing reddish-copper tones, deep conditioning, and strengthening with zero chemical toxicity.',
+    source: 'BIS IS:8481 (Henna Powder Specification) & Ayurvedic Pharmacopoeia',
+    exposureNote: '100% natural botanical hair application.',
+    recommendation: 'Outstanding safe, natural chemical-free hair color and deep conditioning treatment.'
+  },
+  {
+    keywords: ['indigofera tinctoria', 'indigo powder', 'neel'],
+    risk: 'green',
+    concernType: 'General',
+    reason: 'Natural organic plant leaf powder containing natural indican dye. When combined or applied after henna, produces rich dark brown to jet black shades without any synthetic PPD, ammonia, or peroxide.',
+    source: 'Ayurvedic Pharmacopoeia of India & Botanical Safety Compendium',
+    exposureNote: 'Natural organic botanical colorant.',
+    recommendation: 'Best 100% natural, hypoallergenic alternative to synthetic permanent black hair dyes.'
+  },
+  {
+    keywords: ['cassia auriculata', 'senna', 'neutral henna'],
+    risk: 'green',
+    concernType: 'General',
+    reason: 'Natural Ayurvedic herb that conditions hair, imparts brilliant golden shine, and strengthens limp strands without altering dark hair color.',
+    source: 'Indian Herbal Pharmacopoeia',
+    exposureNote: 'Natural botanical conditioning mask.',
+    recommendation: 'Excellent organic hair treatment for shine and scalp vitality.'
+  },
+
   // Oral Care & Toothpaste rules
   {
     keywords: ['nano hydroxyapatite', 'hydroxyapatite', 'nhap'],

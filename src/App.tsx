@@ -89,8 +89,8 @@ const SECTOR_SUBCATEGORIES: Record<MainSector, { label: CategoryType; displayNam
     { label: 'Cooking Oils & Ghee', displayName: '🫒 Oils & Ghee', icon: Droplets },
     { label: 'Beverages & Juices', displayName: '🍵 Juices & Tea', icon: Coffee },
     { label: 'Staples & Millets', displayName: '🌾 Staples & Millets', icon: Wheat },
-    { label: 'Haircare', displayName: '🧴 Shampoos', icon: Sparkles },
-    { label: 'Personal Care', displayName: '🧼 Soaps', icon: ShieldCheck },
+    { label: 'Haircare', displayName: '🧴 Haircare & Colors', icon: Sparkles },
+    { label: 'Personal Care', displayName: '🧼 Soaps & Oral Care', icon: ShieldCheck },
     { label: 'Skincare', displayName: '✨ Skincare & Sunscreens', icon: Sparkle },
     { label: 'Fruits & Vegetables', displayName: '🍎 Fresh Produce', icon: Apple }
   ],
@@ -109,8 +109,8 @@ const SECTOR_SUBCATEGORIES: Record<MainSector, { label: CategoryType; displayNam
   ],
   PERSONAL_CARE: [
     { label: 'PERSONAL_CARE', displayName: 'All in PERSONAL_CARE (Top 20)', icon: ShieldCheck },
-    { label: 'Haircare', displayName: '🧴 Shampoos (Top 20)', icon: Sparkles },
-    { label: 'Personal Care', displayName: '🧼 Soaps (Top 20)', icon: ShieldCheck },
+    { label: 'Haircare', displayName: '🧴 Shampoos & Hair Colors', icon: Sparkles },
+    { label: 'Personal Care', displayName: '🧼 Soaps & Oral Care', icon: ShieldCheck },
     { label: 'Skincare', displayName: '✨ Moisturizers & Sunscreens', icon: Sparkle }
   ]
 };
@@ -558,6 +558,7 @@ export const App: React.FC = () => {
     { label: '🍵 Juices & Tea', query: 'beverages', cat: 'Beverages & Juices' as CategoryType, sector: 'FOOD' as MainSector },
     { label: '🌾 Staples & Millets', query: 'staples', cat: 'Staples & Millets' as CategoryType, sector: 'GROCERY' as MainSector },
     { label: '🧴 Shampoos', query: 'shampoos', cat: 'Haircare' as CategoryType, sector: 'PERSONAL_CARE' as MainSector },
+    { label: '🎨 Hair Colors', query: 'hair color', cat: 'Haircare' as CategoryType, sector: 'PERSONAL_CARE' as MainSector },
     { label: '🧼 Soaps', query: 'soaps', cat: 'Personal Care' as CategoryType, sector: 'PERSONAL_CARE' as MainSector },
     { label: '✨ Moisturizers', query: 'moisturizers', cat: 'Skincare' as CategoryType, sector: 'PERSONAL_CARE' as MainSector },
     { label: '☀️ Sunscreens', query: 'sunscreens', cat: 'Skincare' as CategoryType, sector: 'PERSONAL_CARE' as MainSector }
