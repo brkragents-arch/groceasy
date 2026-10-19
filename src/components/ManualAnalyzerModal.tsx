@@ -8,6 +8,7 @@ import {
   analyzeIngredientsWithLocalLLM 
 } from '../services/localLLMService';
 import { Sparkles, X, AlertCircle, Cpu, CheckCircle2, RefreshCw, Settings2 } from 'lucide-react';
+import { safeStorage } from '../utils/safeStorage';
 
 interface ManualAnalyzerModalProps {
   isOpen: boolean;
@@ -31,8 +32,12 @@ export const ManualAnalyzerModal: React.FC<ManualAnalyzerModalProps> = ({
 
   // Local LLM State
   const [llmConfig, setLlmConfig] = useState<LocalLLMConfig>(() => {
-    const saved = localStorage.getItem('safescan_local_llm');
-    return saved ? JSON.parse(saved) : DEFAULT_LOCAL_LLM_CONFIG;
+    try {
+      const saved = safeStorage.getItem('safescan_local_llm');
+      return saved ? JSON.parse(saved) : DEFAULT_LOCAL_LLM_CONFIG;
+    } catch {
+      return DEFAULT_LOCAL_LLM_CONFIG;
+    }
   });
   const [showLLMSettings, setShowLLMSettings] = useState(false);
   const [connectionStatus, setConnectionStatus] = useState<{ testing: boolean; message?: string; isConnected?: boolean }>({
@@ -50,7 +55,7 @@ export const ManualAnalyzerModal: React.FC<ManualAnalyzerModalProps> = ({
         isConnected: true,
         message: `Connected! Available models: ${res.models?.join(', ') || 'Default'}`
       });
-      localStorage.setItem('safescan_local_llm', JSON.stringify({ ...llmConfig, enabled: true }));
+      safeStorage.setItem('safescan_local_llm', JSON.stringify({ ...llmConfig, enabled: true }));
       setLlmConfig(prev => ({ ...prev, enabled: true }));
     } else {
       setConnectionStatus({
@@ -166,7 +171,7 @@ export const ManualAnalyzerModal: React.FC<ManualAnalyzerModalProps> = ({
                   onChange={e => {
                     const updated = { ...llmConfig, enabled: e.target.checked };
                     setLlmConfig(updated);
-                    localStorage.setItem('safescan_local_llm', JSON.stringify(updated));
+                    safeStorage.setItem('safescan_local_llm', JSON.stringify(updated));
                   }}
                   className="rounded accent-emerald-500"
                 />
