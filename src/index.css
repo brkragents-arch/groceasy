@@ -60,13 +60,45 @@
   scrollbar-color: rgba(23, 61, 53, 0.25) transparent;
 }
 
-/* Realistic Mobile Simulator Chassis */
+/* Realistic Mobile Frame Chassis with Physical Hardware Frame */
+.mobile-hardware-wrapper {
+  position: relative;
+  padding: 10px;
+}
+
+/* Hardware volume & power buttons on phone chassis */
+.mobile-hardware-wrapper::before {
+  content: '';
+  position: absolute;
+  left: 2px;
+  top: 140px;
+  width: 4px;
+  height: 48px;
+  background: #334155;
+  border-radius: 2px 0 0 2px;
+  box-shadow: 0 60px 0 #334155, 0 120px 0 #334155;
+}
+
+.mobile-hardware-wrapper::after {
+  content: '';
+  position: absolute;
+  right: 2px;
+  top: 180px;
+  width: 4px;
+  height: 70px;
+  background: #334155;
+  border-radius: 0 2px 2px 0;
+}
+
 .mobile-device-chassis {
-  width: 390px;
-  height: 844px;
-  max-height: calc(100vh - 120px);
-  border-radius: 46px;
-  box-shadow: 0 0 0 10px #1E293B, 0 0 0 12px #334155, 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  width: 393px;
+  height: 852px;
+  max-height: calc(100vh - 100px);
+  border-radius: 50px;
+  box-shadow: 
+    0 0 0 4px #1E293B, 
+    0 0 0 10px #0F172A,
+    0 25px 60px -10px rgba(0, 0, 0, 0.7);
   overflow: hidden;
   position: relative;
   background: #F8F9F7;
@@ -80,10 +112,34 @@
   top: 10px;
   left: 50%;
   transform: translateX(-50%);
-  width: 100px;
-  height: 25px;
+  width: 105px;
+  height: 26px;
   background: #000000;
   border-radius: 20px;
   z-index: 50;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 12px;
+}
+
+.mobile-dynamic-island::after {
+  content: '';
+  width: 9px;
+  height: 9px;
+  background: #0f172a;
+  border-radius: 50%;
+  border: 1.5px solid #1e293b;
+}
+
+/* Home Indicator Bar */
+.mobile-home-indicator {
+  width: 125px;
+  height: 4px;
+  background: #1E293B;
+  opacity: 0.35;
+  border-radius: 9999px;
+  margin: 4px auto 3px auto;
   pointer-events: none;
 }

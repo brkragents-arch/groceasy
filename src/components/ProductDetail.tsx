@@ -38,8 +38,8 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({
 
   return (
     <div className="min-h-screen bg-[#F8F9F7] pb-24 animate-fadeIn">
-      {/* Top Navbar */}
-      <div className="sticky top-0 z-30 bg-[#173D35] text-white px-4 sm:px-8 py-3.5 flex items-center justify-between shadow-md">
+      {/* Top Navbar with 1-inch desktop margins */}
+      <div className="sticky top-0 z-30 bg-[#173D35] text-white px-4 sm:px-8 lg:px-[1in] py-3.5 flex items-center justify-between shadow-md">
         <button 
           onClick={onBack}
           className="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 flex items-center gap-2 transition-colors text-xs font-semibold"
@@ -65,7 +65,7 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({
         </div>
       </div>
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 space-y-6">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-[1in] pt-6 space-y-6">
         {/* Product Hero Card */}
         <div className="bg-white rounded-3xl p-5 shadow-sm border border-stone-100 flex flex-col md:flex-row gap-5 items-center">
           <div className="w-40 h-40 bg-stone-50 rounded-2xl overflow-hidden flex-shrink-0 shadow-inner">

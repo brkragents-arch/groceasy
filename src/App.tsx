@@ -231,28 +231,33 @@ export const App: React.FC = () => {
           <div className="w-full max-w-[430px] mb-3 flex items-center justify-between text-xs text-stone-300 px-2">
             <span className="flex items-center gap-1.5 font-semibold text-emerald-400">
               <Smartphone className="w-4 h-4" />
-              <span>Mobile Preview Mode</span>
+              <span>Mobile Frame Simulator</span>
             </span>
             <button
               onClick={() => setViewMode('desktop')}
               className="px-3 py-1 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold transition-colors flex items-center gap-1"
             >
               <Monitor className="w-3.5 h-3.5" />
-              <span>Switch to Desktop View</span>
+              <span>Exit to Desktop</span>
             </button>
           </div>
-          <div className="mobile-device-chassis shadow-2xl overflow-y-auto max-h-[90vh] w-full max-w-[420px] bg-[#F8F9F7] custom-scrollbar relative">
-            <div className="mobile-dynamic-island" />
-            {detailView}
+          <div className="mobile-hardware-wrapper">
+            <div className="mobile-device-chassis shadow-2xl overflow-y-auto max-h-[88vh] w-full max-w-[393px] bg-[#F8F9F7] custom-scrollbar relative">
+              <div className="mobile-dynamic-island" />
+              <div className="pt-6">
+                {detailView}
+              </div>
+              <div className="mobile-home-indicator" />
+            </div>
           </div>
         </div>
       );
     }
 
     return (
-      <div className="min-h-screen bg-[#F8F9F7]">
+      <div className="min-h-screen bg-[#F8F9F7] px-0 md:px-[1in]">
         {/* Desktop top bar to switch view or navigate */}
-        <div className="bg-[#112d27] text-white px-4 sm:px-8 py-2 text-xs flex items-center justify-between border-b border-emerald-900/40">
+        <div className="bg-[#112d27] text-white px-4 sm:px-8 py-2 text-xs flex items-center justify-between border-b border-emerald-900/40 md:rounded-t-2xl mt-0 md:mt-2">
           <span className="text-emerald-300 font-semibold flex items-center gap-1.5">
             <ShieldCheck className="w-4 h-4" /> Groceasy India • Formulation & Safety Analysis Report
           </span>
@@ -262,7 +267,7 @@ export const App: React.FC = () => {
               className="flex items-center gap-1.5 px-3 py-1 rounded-xl bg-white/10 hover:bg-white/20 text-stone-200 transition-colors font-medium"
             >
               <Smartphone className="w-3.5 h-3.5 text-amber-400" />
-              <span>Preview in Mobile View</span>
+              <span>Preview in Mobile Frame</span>
             </button>
           </div>
         </div>
@@ -558,7 +563,7 @@ export const App: React.FC = () => {
     { label: '☀️ Sunscreens', query: 'sunscreens', cat: 'Skincare' as CategoryType, sector: 'PERSONAL_CARE' as MainSector }
   ];
 
-  // Mobile Device Simulator Layout
+  // Mobile Frame Simulator Layout
   if (viewMode === 'mobile') {
     return (
       <div className="min-h-screen bg-stone-900 py-4 sm:py-6 px-2 sm:px-4 flex flex-col items-center justify-start selection:bg-emerald-200">
@@ -566,7 +571,7 @@ export const App: React.FC = () => {
         <div className="w-full max-w-[430px] mb-3 flex items-center justify-between text-xs text-stone-300 px-2">
           <div className="flex items-center gap-1.5 font-bold text-emerald-400">
             <Smartphone className="w-4 h-4" />
-            <span>Mobile Preview (iPhone / Android)</span>
+            <span>Mobile Frame (iPhone Pro / Android)</span>
           </div>
           <button
             onClick={() => setViewMode('desktop')}
@@ -577,15 +582,16 @@ export const App: React.FC = () => {
           </button>
         </div>
 
-        {/* Realistic Mobile Device Frame */}
-        <div className="mobile-device-chassis shadow-2xl relative w-full max-w-[420px] h-[860px] max-h-[92vh] flex flex-col overflow-hidden bg-[#F8F9F7]">
-          {/* Dynamic Island Notch */}
-          <div className="mobile-dynamic-island" />
+        {/* Realistic Mobile Device Frame with physical hardware side buttons */}
+        <div className="mobile-hardware-wrapper">
+          <div className="mobile-device-chassis shadow-2xl relative w-full max-w-[393px] h-[852px] max-h-[90vh] flex flex-col overflow-hidden bg-[#F8F9F7]">
+            {/* Dynamic Island Notch */}
+            <div className="mobile-dynamic-island" />
 
-          {/* Internal Scrollable Content */}
-          <div className="flex-1 overflow-y-auto custom-scrollbar pb-24">
-            {/* Mobile Header */}
-            <header className="bg-[#173D35] text-white pt-5 pb-7 px-4 rounded-b-[2.5rem] shadow-md relative overflow-hidden">
+            {/* Internal Scrollable Content */}
+            <div className="flex-1 overflow-y-auto custom-scrollbar pb-24">
+              {/* Mobile Header */}
+              <header className="bg-[#173D35] text-white pt-8 pb-7 px-4 rounded-b-[2.5rem] shadow-md relative overflow-hidden">
               <div className="flex items-center justify-between mb-3.5">
                 <div className="flex items-center gap-2">
                   <div className="w-8 h-8 rounded-xl bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20">
@@ -743,8 +749,10 @@ export const App: React.FC = () => {
               <Sparkles className="w-4 h-4" />
               <span>Analyze</span>
             </button>
+            <div className="mobile-home-indicator" />
           </nav>
         </div>
+      </div>
 
         {/* Modals inside mobile view */}
         <BarcodeScannerModal
@@ -772,11 +780,11 @@ export const App: React.FC = () => {
     );
   }
 
-  // Full Desktop View (Spans entire browser edge-to-edge)
+  // Full Desktop View (Reduced width by 1-inch on left and right)
   return (
-    <div className="min-h-screen bg-[#F8F9F7] text-stone-900 pb-20 selection:bg-emerald-200">
+    <div className="min-h-screen bg-[#F8F9F7] text-stone-900 pb-20 selection:bg-emerald-200 px-0 md:px-[1in]">
       {/* Top Groceasy Forest-Green Banner & Header */}
-      <header className="bg-[#173D35] text-white pt-5 pb-8 px-4 sm:px-6 lg:px-8 shadow-md relative overflow-hidden">
+      <header className="bg-[#173D35] text-white pt-5 pb-8 px-4 sm:px-6 lg:px-8 shadow-md relative overflow-hidden md:rounded-b-[2.5rem] mt-0 md:mt-2">
         {/* Subtle background decoration */}
         <div className="absolute -right-10 -bottom-10 w-96 h-96 bg-emerald-700/20 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute left-1/4 -top-10 w-80 h-80 bg-[#23584d]/30 rounded-full blur-2xl pointer-events-none" />
@@ -862,7 +870,7 @@ export const App: React.FC = () => {
                 <button
                   onClick={() => setViewMode('desktop')}
                   className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all bg-emerald-400 text-[#173D35] shadow-xs"
-                  title="Full-width desktop view"
+                  title="Desktop view with 1-inch margins"
                 >
                   <Monitor className="w-3.5 h-3.5" />
                   <span className="hidden sm:inline">Desktop</span>
@@ -870,10 +878,10 @@ export const App: React.FC = () => {
                 <button
                   onClick={() => setViewMode('mobile')}
                   className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all text-emerald-200/80 hover:text-white"
-                  title="Switch to Mobile Device simulator"
+                  title="Switch to Mobile Frame simulator"
                 >
                   <Smartphone className="w-3.5 h-3.5" />
-                  <span className="hidden sm:inline">Mobile View</span>
+                  <span className="hidden sm:inline">Mobile Frame</span>
                 </button>
               </div>
             </div>
