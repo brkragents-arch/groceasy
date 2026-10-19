@@ -68,11 +68,11 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-[1in] pt-6 space-y-6">
         {/* Product Hero Card */}
         <div className="bg-white rounded-3xl p-5 shadow-sm border border-stone-100 flex flex-col md:flex-row gap-5 items-center">
-          <div className="w-40 h-40 bg-stone-50 rounded-2xl overflow-hidden flex-shrink-0 shadow-inner">
+          <div className="w-36 h-36 sm:w-40 sm:h-40 bg-white rounded-2xl overflow-hidden flex-shrink-0 shadow-inner p-2 border border-stone-100 flex items-center justify-center">
             <img 
               src={product.thumbnailUrl} 
               alt={product.name} 
-              className="w-full h-full object-cover"
+              className="w-full h-full object-contain"
               onError={(e) => {
                 const target = e.currentTarget;
                 target.onerror = null;

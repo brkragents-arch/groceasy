@@ -278,9 +278,9 @@ export const App: React.FC = () => {
 
   // Common inner content rendered in both Desktop and Mobile views
   const renderSectorSelector = () => (
-    <div className="bg-white rounded-3xl p-4 sm:p-5 shadow-sm border border-stone-200/80 space-y-4">
+    <div className="bg-white rounded-2xl sm:rounded-3xl p-3 sm:p-5 shadow-xs border border-stone-200/80 space-y-3 sm:space-y-4">
       {/* Row 1: Primary Department / Sector Cards */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-3">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3">
         {MAIN_SECTORS.map((sector) => {
           const Icon = sector.icon;
           const isSelected = selectedSector === sector.key;
@@ -292,28 +292,28 @@ export const App: React.FC = () => {
                 setSelectedCategory(sector.key);
                 setSearchQuery('');
               }}
-              className={`flex flex-col text-left p-3 sm:p-4 rounded-2xl transition-all border relative overflow-hidden group ${
+              className={`flex flex-col text-left p-2.5 sm:p-4 rounded-xl sm:rounded-2xl transition-all border relative overflow-hidden group ${
                 isSelected
-                  ? 'bg-[#173D35] text-white border-[#173D35] shadow-sm'
+                  ? 'bg-[#173D35] text-white border-[#173D35] shadow-xs'
                   : 'bg-stone-50 hover:bg-stone-100 text-stone-800 border-stone-200/60'
               }`}
             >
-              <div className="flex items-center justify-between mb-2">
-                <div className={`w-8 h-8 rounded-xl flex items-center justify-center ${
+              <div className="flex items-center justify-between mb-1.5 sm:mb-2">
+                <div className={`w-7 h-7 sm:w-8 sm:h-8 rounded-lg sm:rounded-xl flex items-center justify-center ${
                   isSelected ? 'bg-white/15 text-emerald-300' : 'bg-white text-stone-700 shadow-xs'
                 }`}>
-                  <Icon className="w-4 h-4" />
+                  <Icon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                 </div>
-                <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                <span className={`text-[9px] sm:text-[10px] font-extrabold px-1.5 sm:px-2 py-0.5 rounded-full ${
                   isSelected ? 'bg-emerald-400/20 text-emerald-300' : 'bg-stone-200/70 text-stone-600'
                 }`}>
                   {sector.badge}
                 </span>
               </div>
-              <span className="text-xs sm:text-sm font-extrabold tracking-tight">
+              <span className="text-[11px] sm:text-sm font-extrabold tracking-tight truncate w-full">
                 {sector.label}
               </span>
-              <span className={`text-[11px] mt-0.5 line-clamp-1 ${
+              <span className={`text-[10px] sm:text-[11px] mt-0.5 line-clamp-1 ${
                 isSelected ? 'text-emerald-100/70' : 'text-stone-500'
               }`}>
                 {sector.description}
@@ -324,8 +324,8 @@ export const App: React.FC = () => {
       </div>
 
       {/* Row 2: Subcategories contextual to selected sector */}
-      <div className="pt-2 border-t border-stone-100 flex items-center gap-2 overflow-x-auto custom-scrollbar pb-1">
-        <span className="text-xs font-bold text-stone-500 flex-shrink-0 uppercase tracking-wider text-[10px]">
+      <div className="pt-2 border-t border-stone-100 flex items-center gap-1.5 sm:gap-2 overflow-x-auto custom-scrollbar pb-1">
+        <span className="text-[10px] font-bold text-stone-500 flex-shrink-0 uppercase tracking-wider">
           Categories:
         </span>
         {SECTOR_SUBCATEGORIES[selectedSector].map((cat, idx) => {
@@ -335,7 +335,7 @@ export const App: React.FC = () => {
             <button
               key={idx}
               onClick={() => setSelectedCategory(cat.label)}
-              className={`flex-shrink-0 flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold transition-all ${
+              className={`flex-shrink-0 flex items-center gap-1.5 px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-xl text-[11px] sm:text-xs font-bold transition-all ${
                 isSelected
                   ? 'bg-amber-400 text-stone-900 shadow-xs scale-[1.02]'
                   : 'bg-stone-100/80 text-stone-700 hover:bg-stone-200/70 border border-stone-200/50'
@@ -408,37 +408,37 @@ export const App: React.FC = () => {
           </button>
         </div>
 
-        <div className="flex gap-3 sm:gap-4 overflow-x-auto custom-scrollbar pb-2 pt-1">
+        <div className="flex gap-2.5 sm:gap-4 overflow-x-auto custom-scrollbar pb-2 pt-1">
           {items.map(p => (
             <div 
               key={p.id}
               onClick={() => setSelectedProduct(p)}
-              className="flex-shrink-0 w-44 sm:w-52 md:w-56 bg-stone-50/70 hover:bg-white rounded-2xl p-3 shadow-xs hover:shadow-md border border-stone-200/70 transition-all cursor-pointer flex flex-col justify-between group"
+              className="flex-shrink-0 w-36 sm:w-48 md:w-56 bg-stone-50/80 hover:bg-white rounded-2xl p-2.5 sm:p-3 shadow-xs hover:shadow-md border border-stone-200/70 transition-all cursor-pointer flex flex-col justify-between group"
             >
-              <div className="relative w-full aspect-square bg-white rounded-xl overflow-hidden mb-2.5">
+              <div className="relative w-full aspect-square bg-white rounded-xl overflow-hidden mb-2 p-1.5 flex items-center justify-center border border-stone-100 shadow-inner">
                 <img 
                   src={p.thumbnailUrl} 
                   alt={p.name} 
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" 
+                  className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300" 
                   loading="lazy" 
                 />
-                <span className="absolute top-2 left-2 bg-[#173D35] text-white text-[10px] font-extrabold px-2 py-0.5 rounded-md shadow-xs flex items-center gap-1">
+                <span className="absolute top-1.5 left-1.5 bg-[#173D35] text-white text-[9px] sm:text-[10px] font-extrabold px-1.5 py-0.5 rounded-md shadow-xs flex items-center gap-0.5">
                   ★ {p.safetyAssessment.score.toFixed(1)}
                 </span>
               </div>
               <div>
                 <div className="flex items-center gap-1 mb-1">
-                  <span className="text-[10px] font-extrabold px-2 py-0.5 rounded bg-white text-stone-800 uppercase tracking-wider border border-stone-200/80 truncate">
+                  <span className="text-[9px] font-extrabold px-1.5 py-0.5 rounded bg-white text-stone-800 uppercase tracking-wider border border-stone-200/80 truncate">
                     {p.brand}
                   </span>
                 </div>
-                <h4 className="text-xs font-bold text-stone-900 line-clamp-2 leading-snug mb-1" title={p.name}>
+                <h4 className="text-[11px] sm:text-xs font-bold text-stone-900 line-clamp-2 leading-tight mb-1" title={p.name}>
                   {p.name}
                 </h4>
               </div>
-              <div className="mt-2 pt-2 border-t border-stone-200/60 flex items-center justify-between">
-                <span className="text-xs font-black text-[#173D35]">{formatInr(p.priceInr)}</span>
-                <span className="text-[10px] font-medium text-stone-500">{p.packageSize}</span>
+              <div className="mt-1.5 pt-1.5 border-t border-stone-200/60 flex items-center justify-between">
+                <span className="text-xs sm:text-sm font-extrabold text-[#173D35]">{formatInr(p.priceInr)}</span>
+                <span className="text-[10px] font-medium text-stone-500 truncate ml-1">{p.packageSize}</span>
               </div>
             </div>
           ))}
@@ -471,9 +471,9 @@ export const App: React.FC = () => {
           <div
             key={product.id}
             onClick={() => setSelectedProduct(product)}
-            className="bg-white rounded-3xl p-4 shadow-xs border border-stone-200/80 hover:shadow-md transition-all cursor-pointer flex items-center gap-3.5 group"
+            className="bg-white rounded-2xl sm:rounded-3xl p-3 sm:p-4 shadow-xs border border-stone-200/80 hover:shadow-md transition-all cursor-pointer flex items-center gap-3 sm:gap-3.5 group"
           >
-            <div className={`w-9 h-9 rounded-2xl flex items-center justify-center font-black text-xs flex-shrink-0 ${
+            <div className={`w-8 h-8 sm:w-9 sm:h-9 rounded-xl sm:rounded-2xl flex items-center justify-center font-black text-xs flex-shrink-0 ${
               rankIdx === 0 
                 ? 'bg-amber-400 text-stone-900 shadow-xs' 
                 : rankIdx < 3 
@@ -485,20 +485,20 @@ export const App: React.FC = () => {
             <img
               src={product.thumbnailUrl}
               alt={product.name}
-              className="w-16 h-16 object-cover rounded-2xl flex-shrink-0 bg-stone-50 border border-stone-100 group-hover:scale-105 transition-transform"
+              className="w-14 h-14 sm:w-16 sm:h-16 object-contain p-1 rounded-xl sm:rounded-2xl flex-shrink-0 bg-white border border-stone-200/80 group-hover:scale-105 transition-transform"
             />
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-1.5 mb-1">
-                <span className="text-[10px] font-black px-2 py-0.5 rounded-md bg-stone-100 text-stone-800 uppercase tracking-wider border border-stone-200/80">
+                <span className="text-[9px] font-black px-1.5 py-0.5 rounded bg-stone-100 text-stone-800 uppercase tracking-wider border border-stone-200/80 truncate">
                   {product.brand}
                 </span>
-                <span className="text-[10px] text-stone-400">•</span>
+                <span className="text-[9px] text-stone-400">•</span>
                 <span className="text-[10px] text-stone-500 font-medium truncate">{product.category}</span>
               </div>
-              <h4 className="text-xs font-bold text-stone-900 line-clamp-2 leading-snug" title={product.name}>
+              <h4 className="text-xs font-bold text-stone-900 line-clamp-2 leading-tight" title={product.name}>
                 {product.name}
               </h4>
-              <p className="text-[11px] text-stone-500 mt-1 font-semibold">{product.packageSize} • {formatInr(product.priceInr)}</p>
+              <p className="text-[10px] sm:text-[11px] text-stone-500 mt-1 font-semibold">{product.packageSize} • {formatInr(product.priceInr)}</p>
             </div>
             <div className="text-right flex-shrink-0 pl-2">
               <span className="text-base font-black text-[#173D35]">
