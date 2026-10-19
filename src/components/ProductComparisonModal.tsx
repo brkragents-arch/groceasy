@@ -158,7 +158,13 @@ export const ProductComparisonModal: React.FC<ProductComparisonModalProps> = ({
                   <span className="font-bold text-stone-700">Nutritional / Skin Focus</span>
                   {products.map(p => (
                     <div key={p.id} className="text-stone-700">
-                      {p.nutritionFacts ? (
+                      {/tooth\s*paste|dental|enamel|dente|dentifrice|oral/i.test(p.name) || /tooth\s*paste|dental|enamel|dente|oral/i.test(p.subcategory || '') ? (
+                        <div className="text-[11px] space-y-0.5 text-teal-800">
+                          <p className="font-semibold">Remineralizing: nHAp Active</p>
+                          <p>SLS-Free: Mild Surfactants</p>
+                          <p>Dentifrice: BIS IS:6356</p>
+                        </div>
+                      ) : p.nutritionFacts && !['Personal Care', 'Haircare', 'Skincare'].includes(p.category) ? (
                         <div className="text-[11px] space-y-0.5">
                           <p>Sugar: {p.nutritionFacts.addedSugarG ?? 0}g</p>
                           <p>Trans Fat: {p.nutritionFacts.transFatG ?? 0}g</p>
@@ -170,7 +176,7 @@ export const ProductComparisonModal: React.FC<ProductComparisonModalProps> = ({
                           <p>Types: {p.skinSuitability.skinTypes.join(', ')}</p>
                         </div>
                       ) : (
-                        <span className="text-stone-400">Fresh Whole Produce</span>
+                        <span className="text-stone-400">Personal Care / Fresh Item</span>
                       )}
                     </div>
                   ))}

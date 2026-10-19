@@ -360,6 +360,26 @@ export const MOCK_PRODUCTS: Product[] = [
   }, 19),
 
   // =========================================================================
+  // ORAL CARE & DENTAL COSMETICS (Personal Care -> Toothpastes & Oral Care)
+  // =========================================================================
+  createProduct({
+    id: 'toothpaste-dente91',
+    barcode: '8906109988091',
+    name: 'Dente91 Enamel Pro Remineralizing Toothpaste (Cool Mint)',
+    brand: 'Dente91',
+    category: 'Personal Care',
+    subcategory: 'Toothpastes & Oral Care',
+    packageSize: '100 g',
+    priceInr: 219,
+    thumbnailUrl: 'https://m.media-amazon.com/images/I/813f8XQfPOL._SL600_.jpg',
+    rawIngredients: 'Aqua, Sorbitol, Hydrated Silica, Glycerin, Nano Hydroxyapatite, PEG-8, Lactoferrin, Cocamidopropyl Betaine, Sodium Methyl Cocoyl Taurate, Xanthan Gum, Menthol, Titanium Dioxide, Sodium Saccharin, Sodium Benzoate',
+    skinSuitability: { skinTypes: ['Sensitive'], comedogenicRating: 0, fragranceFree: false, sulfateFree: true, parabenFree: true },
+    declaredAllergens: ['Menthol (Natural Mint Flavor)'],
+    retailerName: 'Amazon India',
+    retailerUrl: 'https://www.amazon.in/dp/B091FHGH4S'
+  }),
+
+  // =========================================================================
   // 2. TOP 20 SOAPS & CLEANSERS (Personal Care -> Soaps)
   // Accurate curated cosmetic images of artisanal & retail soap bars / body bars
   // =========================================================================

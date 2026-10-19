@@ -166,6 +166,80 @@ export const INGREDIENT_KNOWLEDGE_BASE: IngredientRule[] = [
     source: 'BIS IS:4707 & US FDA OTC Drug Review',
     exposureNote: 'Should be used as a targeted treatment rather than daily casual shampoo.',
     recommendation: 'Limit use to 2-3 times weekly and alternate with a gentle moisturizing cleanser.'
+  },
+
+  // Oral Care & Toothpaste rules
+  {
+    keywords: ['nano hydroxyapatite', 'hydroxyapatite', 'nhap'],
+    risk: 'green',
+    concernType: 'General',
+    reason: 'Gold-standard biomimetic mineral that remineralizes weakened enamel, seals microscopic dentinal tubules, and relieves tooth sensitivity without fluoride toxicity.',
+    source: 'SCCS Opinion on Hydroxyapatite & International Journal of Dentistry',
+    exposureNote: 'Biocompatible mineral identical to natural human tooth enamel.',
+    recommendation: 'Outstanding fluoride-free active for daily enamel restoration and sensitive teeth.'
+  },
+  {
+    keywords: ['lactoferrin'],
+    risk: 'green',
+    concernType: 'General',
+    reason: 'Natural protective milk-derived antimicrobial protein that selectively targets pathogenic oral bacteria and reduces gum inflammation without disrupting the healthy oral microbiome.',
+    source: 'European Journal of Oral Sciences & PubMed Dental Trials',
+    exposureNote: 'Natural salivary defense enzyme analog.',
+    recommendation: 'Highly beneficial for gum health and lasting breath freshness.'
+  },
+  {
+    keywords: ['hydrated silica', 'silica'],
+    risk: 'green',
+    concernType: 'General',
+    reason: 'Gentle, controlled polishing micro-abrasive safe for dental enamel; cleans plaque effectively with low Relative Dentin Abrasivity (RDA).',
+    source: 'American Dental Association (ADA) & BIS IS:6356 Toothpaste Standards',
+    exposureNote: 'Standard gentle dental polishing agent.',
+    recommendation: 'Safe for daily twice-a-day brushing.'
+  },
+  {
+    keywords: ['sodium methyl cocoyl taurate', 'cocamidopropyl betaine'],
+    risk: 'green',
+    concernType: 'General',
+    reason: 'Mild, coconut-derived non-sulfate surfactant; cleans gently without irritating the oral mucosa or triggering painful canker sores unlike harsh SLS.',
+    source: 'Cosmetic Ingredient Review (CIR) & Journal of Clinical Periodontology',
+    exposureNote: 'Sulfate-free mucosal-friendly cleanser.',
+    recommendation: 'Ideal for sensitive gums, dry mouth, or aphthous ulcer-prone individuals.'
+  },
+  {
+    keywords: ['xylitol', 'sorbitol'],
+    risk: 'green',
+    concernType: 'General',
+    reason: 'Non-cariogenic natural humectants and polyols that inhibit Streptococcus mutans, prevent acid formation, and stimulate salivary flow.',
+    source: 'Cochrane Oral Health Group & FSSAI Standards',
+    exposureNote: 'Dental-safe protective humectants.',
+    recommendation: 'Superior tooth-friendly alternatives to fermentable sugars.'
+  },
+  {
+    keywords: ['sodium saccharin'],
+    risk: 'amber',
+    concernType: 'Preservative / Additive',
+    reason: 'Synthetic non-nutritive sweetener commonly used in dental pastes; non-cariogenic, though purely synthetic.',
+    source: 'US FDA & FSSAI Permitted Sweeteners',
+    exposureNote: 'Rinse-off oral formulation.',
+    recommendation: 'Non-harmful in customary toothpaste quantities.'
+  },
+  {
+    keywords: ['peg-8', 'peg-40', 'peg-100', 'polyethylene glycol'],
+    risk: 'amber',
+    concernType: 'General',
+    reason: 'Synthetic humectant and solvent; generally non-irritating but ethoxylated compound requiring purity assurance against trace residues.',
+    source: 'Cosmetic Ingredient Review (CIR) Expert Panel',
+    exposureNote: 'Moisture retainer in gels and dental pastes.',
+    recommendation: 'Safe in purified cosmetic grade formulations.'
+  },
+  {
+    keywords: ['menthol', 'peppermint oil'],
+    risk: 'green',
+    concernType: 'General',
+    reason: 'Natural mint extract providing cooling sensation, breath freshening, and mild anti-plaque properties.',
+    source: 'Flavor and Extract Manufacturers Association (FEMA)',
+    exposureNote: 'Widely tolerated oral care flavor.',
+    recommendation: 'Safe and refreshing for daily oral hygiene.'
   }
 ];
 

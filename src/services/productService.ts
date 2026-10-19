@@ -78,6 +78,7 @@ export class MockIndianMarketProvider implements ProductProvider {
         if ((q === 'oil' || q === 'oils' || q === 'ghee' || q === 'cooking oil') && product.category === 'Cooking Oils & Ghee') matchesSearch = true;
         if ((q === 'beverage' || q === 'beverages' || q === 'juice' || q === 'juices' || q === 'drink' || q === 'drinks') && product.category === 'Beverages & Juices') matchesSearch = true;
         if ((q === 'staple' || q === 'staples' || q === 'millet' || q === 'millets' || q === 'atta' || q === 'dal') && product.category === 'Staples & Millets') matchesSearch = true;
+        if ((q === 'toothpaste' || q === 'tooth paste' || q === 'oral care' || q === 'dentifrice' || q === 'dente' || q === 'dente91' || q === 'enamel') && (product.category === 'Personal Care' || product.subcategory.toLowerCase().includes('toothpaste') || product.name.toLowerCase().includes('dente') || product.name.toLowerCase().includes('toothpaste'))) matchesSearch = true;
       }
 
       return matchesSearch;
@@ -160,18 +161,22 @@ export class ProductService {
     priceInr?: number;
     customIngredients?: any[];
   }): Product {
+    const isToothpasteOrOral = /tooth\s*paste|dental|enamel|dente|dentifrice|oral/i.test(params.name) || /tooth\s*paste|dental|enamel|dente/i.test(params.brand);
+    const resolvedCategory: CategoryType = isToothpasteOrOral ? 'Personal Care' : params.category;
+    const subcategory = isToothpasteOrOral ? 'Toothpastes & Oral Care' : 'Custom Analyzed Entry';
+
     const ingredients = params.customIngredients || analyzeIngredientText(params.rawIngredients);
-    const safetyAssessment = calculateSafetyScore(params.category, ingredients);
+    const safetyAssessment = calculateSafetyScore(resolvedCategory, ingredients);
 
     // Dynamic matching SVG illustration
-    const matchingThumbnail = getProductIllustration(params.name, params.category, params.brand);
+    const matchingThumbnail = getProductIllustration(params.name, resolvedCategory, params.brand);
 
     return {
       id: `custom-${Date.now()}`,
       name: params.name,
       brand: params.brand,
-      category: params.category,
-      subcategory: 'Custom Analyzed Entry',
+      category: resolvedCategory,
+      subcategory,
       packageSize: params.packageSize,
       priceInr: params.priceInr,
       thumbnailUrl: matchingThumbnail,

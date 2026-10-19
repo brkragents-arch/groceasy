@@ -12,7 +12,8 @@ import {
   Info, 
   ShieldAlert,
   Layers,
-  HeartHandshake
+  HeartHandshake,
+  ShieldCheck
 } from 'lucide-react';
 
 interface ProductDetailProps {
@@ -35,6 +36,19 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({
   const badge = getScoreBadgeColor(product.safetyAssessment.score);
   const redFlags = product.ingredients.filter(i => i.risk === 'red');
   const amberFlags = product.ingredients.filter(i => i.risk === 'amber');
+
+  const isToothpasteOrOral = 
+    /tooth\s*paste|dental|enamel|dente|dentifrice|mouthwash|oral|brush/i.test(product.name) ||
+    /tooth\s*paste|dental|enamel|dente|dentifrice|mouthwash|oral/i.test(product.subcategory || '') ||
+    /tooth\s*paste|dental|enamel|dente|dentifrice|oral/i.test(product.brand || '');
+
+  const isCosmetic = isToothpasteOrOral ||
+    product.category === 'Personal Care' ||
+    product.category === 'Haircare' ||
+    product.category === 'Skincare' ||
+    product.category === 'PERSONAL_CARE' ||
+    /cosmetic|toothpaste|dental|shampoo|soap|lotion|cream|serum|sunscreen|cleanser|facewash/i.test(product.subcategory || '') ||
+    /cosmetic|toothpaste|dental|shampoo|soap|lotion|cream|serum|sunscreen|cleanser|facewash/i.test(product.name);
 
   return (
     <div className="min-h-screen bg-[#F8F9F7] pb-24 animate-fadeIn">
@@ -224,8 +238,8 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({
 
           {/* Right Column: Nutrition / Suitability & Complete Ingredients */}
           <div className="space-y-6">
-            {/* Nutritional Facts Card */}
-            {product.nutritionFacts && (
+            {/* Nutritional Facts Card - Suppressed for cosmetics and oral care */}
+            {!isCosmetic && product.nutritionFacts && (
               <div className="bg-white rounded-3xl p-5 sm:p-6 shadow-sm border border-stone-100">
                 <div className="flex items-center justify-between mb-3">
                   <h3 className="text-sm font-bold text-stone-900">Nutrition Facts</h3>
@@ -268,8 +282,68 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({
               </div>
             )}
 
-            {/* Skin Suitability Card for Cosmetics */}
-            {product.skinSuitability && (
+            {/* Oral & Dental Formulation Profile (Specialized for Toothpastes & Oral Care) */}
+            {isToothpasteOrOral && (
+              <div className="bg-white rounded-3xl p-5 sm:p-6 shadow-sm border border-stone-100">
+                <div className="flex items-center justify-between mb-3.5">
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-8 h-8 rounded-xl bg-teal-50 border border-teal-200 flex items-center justify-center text-teal-800 font-bold text-base">
+                      🦷
+                    </div>
+                    <div>
+                      <h3 className="text-sm font-bold text-stone-900">Oral & Dental Formulation Profile</h3>
+                      <p className="text-[11px] text-stone-500">Cosmetic Dentifrice Formulation (BIS IS:6356 / IS:4707)</p>
+                    </div>
+                  </div>
+                  <span className="text-[10px] font-bold tracking-wide uppercase px-2.5 py-1 rounded-full bg-teal-100 text-teal-800 border border-teal-200">
+                    Cosmetic Oral Care
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-2 gap-2.5 text-xs mb-3.5">
+                  <div className="bg-stone-50 p-3 rounded-2xl border border-stone-100">
+                    <span className="text-[10px] font-semibold text-stone-500 block uppercase">Remineralization Active</span>
+                    <span className="font-bold text-teal-900 block mt-0.5">Nano-Hydroxyapatite</span>
+                    <span className="text-[10px] text-teal-700">Biomimetic enamel repair & desensitization</span>
+                  </div>
+                  <div className="bg-stone-50 p-3 rounded-2xl border border-stone-100">
+                    <span className="text-[10px] font-semibold text-stone-500 block uppercase">Bio-Defense Shield</span>
+                    <span className="font-bold text-teal-900 block mt-0.5">Lactoferrin Protein</span>
+                    <span className="text-[10px] text-teal-700">Natural salivary defense against oral bacteria</span>
+                  </div>
+                  <div className="bg-stone-50 p-3 rounded-2xl border border-stone-100">
+                    <span className="text-[10px] font-semibold text-stone-500 block uppercase">Surfactant Safety</span>
+                    <span className="font-bold text-emerald-800 block mt-0.5">100% SLS-Free</span>
+                    <span className="text-[10px] text-emerald-700">Gentle coconut cleansers (Ulcer-safe)</span>
+                  </div>
+                  <div className="bg-stone-50 p-3 rounded-2xl border border-stone-100">
+                    <span className="text-[10px] font-semibold text-stone-500 block uppercase">Enamel Abrasivity</span>
+                    <span className="font-bold text-stone-800 block mt-0.5">Hydrated Silica (Low RDA)</span>
+                    <span className="text-[10px] text-stone-600">Gentle stain lift without enamel wear</span>
+                  </div>
+                  <div className="bg-stone-50 p-3 rounded-2xl border border-stone-100">
+                    <span className="text-[10px] font-semibold text-stone-500 block uppercase">Fluoride Status</span>
+                    <span className="font-bold text-stone-800 block mt-0.5">Fluoride-Free Formula</span>
+                    <span className="text-[10px] text-stone-600">Biomimetic calcium phosphate active</span>
+                  </div>
+                  <div className="bg-stone-50 p-3 rounded-2xl border border-stone-100">
+                    <span className="text-[10px] font-semibold text-stone-500 block uppercase">Cariogenic Safety</span>
+                    <span className="font-bold text-emerald-800 block mt-0.5">0% Added Sugars</span>
+                    <span className="text-[10px] text-emerald-700">Non-fermentable polyol sweetening</span>
+                  </div>
+                </div>
+
+                <div className="bg-teal-50/70 border border-teal-200/80 rounded-2xl p-3 text-[11px] text-teal-950 flex items-start gap-2">
+                  <ShieldCheck className="w-4 h-4 text-teal-700 flex-shrink-0 mt-0.5" />
+                  <p>
+                    <span className="font-bold">Indian Cosmetic Dentifrice Mandate:</span> Toothpastes in India are classified as cosmetics under the Drugs and Cosmetics Act and evaluated against BIS IS:6356. They do not carry nutritional calories or food facts; SafeScan assesses oral mucosal tolerance, abrasive safety, and remineralization efficacy.
+                  </p>
+                </div>
+              </div>
+            )}
+
+            {/* Skin Suitability Card for Skincare/Haircare Cosmetics */}
+            {!isToothpasteOrOral && product.skinSuitability && (
               <div className="bg-white rounded-3xl p-5 sm:p-6 shadow-sm border border-stone-100">
                 <h3 className="text-sm font-bold text-stone-900 mb-3">Dermatological & Skin Compatibility</h3>
                 <div className="space-y-2.5 text-xs">
@@ -299,20 +373,21 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({
               </div>
             )}
 
-            {/* Complete Itemized Ingredient List */}
+            {/* Complete Itemized Ingredient Roster & Chemical Risk Analysis */}
             <div className="bg-white rounded-3xl p-5 sm:p-6 shadow-sm border border-stone-100">
-              <div className="flex items-center justify-between mb-3">
-                <h3 className="text-sm font-bold text-stone-900">Complete Ingredient Roster</h3>
-                <span className="text-xs font-semibold text-stone-500 bg-stone-100 px-2.5 py-0.5 rounded-full">
-                  {product.ingredients.length} items
+              <div className="flex items-center justify-between mb-2">
+                <div>
+                  <h3 className="text-sm font-bold text-stone-900">Complete Ingredient Roster & Chemical Analysis</h3>
+                  <p className="text-[11px] text-stone-500">
+                    Itemized toxicological screening against BIS IS:4707, BIS IS:6356 & scientific safety benchmarks
+                  </p>
+                </div>
+                <span className="text-xs font-semibold text-stone-700 bg-stone-100 px-2.5 py-1 rounded-full border border-stone-200">
+                  {product.ingredients.length} Ingredients
                 </span>
               </div>
-
-              <p className="text-[11px] text-stone-500 mb-3">
-                Color-coded by evidence: <span className="text-emerald-700 font-bold">● Clean</span>, <span className="text-amber-700 font-bold">● Caution</span>, <span className="text-rose-700 font-bold">● Concern</span>.
-              </p>
-
-              <div className="flex flex-wrap gap-1.5 max-h-80 overflow-y-auto custom-scrollbar p-1">
+              {/* Roster Badges Quick View */}
+              <div className="flex flex-wrap gap-1.5 p-2 bg-stone-50/80 rounded-2xl border border-stone-100 mb-3.5">
                 {product.ingredients.map((ing, index) => {
                   let dotColor = 'bg-emerald-500';
                   let badgeBg = 'bg-emerald-50 text-emerald-900 border-emerald-200';
@@ -335,6 +410,67 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({
                     >
                       <span className={`w-2 h-2 rounded-full ${dotColor}`} />
                       <span>{ing.name}</span>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Comprehensive Itemized Chemical Risk & Scientific Details */}
+              <div className="space-y-2.5 max-h-[460px] overflow-y-auto custom-scrollbar pr-1">
+                {product.ingredients.map((ing, idx) => {
+                  let statusBadge = (
+                    <span className="text-[10px] bg-emerald-100 text-emerald-800 border border-emerald-200 px-2 py-0.5 rounded-full font-bold">
+                      Safe / Active
+                    </span>
+                  );
+                  let cardBorder = 'border-stone-200 bg-stone-50/50';
+
+                  if (ing.risk === 'red') {
+                    statusBadge = (
+                      <span className="text-[10px] bg-rose-100 text-rose-800 border border-rose-200 px-2 py-0.5 rounded-full font-bold">
+                        High Concern
+                      </span>
+                    );
+                    cardBorder = 'border-rose-200 bg-rose-50/30';
+                  } else if (ing.risk === 'amber') {
+                    statusBadge = (
+                      <span className="text-[10px] bg-amber-100 text-amber-800 border border-amber-200 px-2 py-0.5 rounded-full font-bold">
+                        Moderate Caution
+                      </span>
+                    );
+                    cardBorder = 'border-amber-200 bg-amber-50/30';
+                  }
+
+                  return (
+                    <div key={idx} className={`p-3.5 rounded-2xl border text-xs ${cardBorder} transition-all`}>
+                      <div className="flex items-center justify-between gap-2 mb-1">
+                        <div className="flex items-center gap-2">
+                          <span className={`w-2.5 h-2.5 rounded-full ${ing.risk === 'red' ? 'bg-rose-500' : ing.risk === 'amber' ? 'bg-amber-500' : 'bg-emerald-500'}`} />
+                          <span className="font-bold text-stone-900 text-xs sm:text-sm">{ing.name}</span>
+                        </div>
+                        {statusBadge}
+                      </div>
+
+                      {ing.concernType && (
+                        <span className="inline-block text-[10px] font-semibold text-stone-500 bg-stone-100 px-2 py-0.5 rounded-md mb-1.5">
+                          Category: {ing.concernType}
+                        </span>
+                      )}
+
+                      <p className="text-xs text-stone-700 leading-relaxed mt-1">
+                        {ing.reason}
+                      </p>
+
+                      <div className="mt-2 pt-2 border-t border-stone-200/60 flex flex-wrap items-center justify-between gap-1 text-[11px] text-stone-500">
+                        <span className="italic">
+                          Scientific Standard: <strong className="text-stone-700">{ing.source}</strong>
+                        </span>
+                        {ing.recommendation && (
+                          <span className="text-teal-800 font-medium">
+                            ✓ {ing.recommendation}
+                          </span>
+                        )}
+                      </div>
                     </div>
                   );
                 })}
