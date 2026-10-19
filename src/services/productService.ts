@@ -21,7 +21,7 @@ export class MockIndianMarketProvider implements ProductProvider {
     const normalizedQ = q.replace(/s$/, ''); // e.g. "shampoos" -> "shampoo", "soaps" -> "soap"
     
     const filtered = this.products.filter(product => {
-      let matchesCategory = !category || category === 'All' || product.category === category;
+      let matchesCategory = !category || category === 'All' || product.category === category || product.subcategory === category;
 
       // Grouped umbrella categories
       if (!matchesCategory && category) {
@@ -41,7 +41,7 @@ export class MockIndianMarketProvider implements ProductProvider {
             'Staples & Grocery',
             'Fruits & Vegetables'
           ].includes(product.category);
-        } else if (category === 'PERSONAL_CARE' || category === 'Personal Care') {
+        } else if (category === 'PERSONAL_CARE') {
           matchesCategory = [
             'Personal Care',
             'Haircare',

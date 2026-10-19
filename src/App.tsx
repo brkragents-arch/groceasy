@@ -91,6 +91,7 @@ const SECTOR_SUBCATEGORIES: Record<MainSector, { label: CategoryType; displayNam
     { label: 'Staples & Millets', displayName: '🌾 Staples & Millets', icon: Wheat },
     { label: 'Haircare', displayName: '🧴 Haircare & Colors', icon: Sparkles },
     { label: 'Personal Care', displayName: '🧼 Soaps & Oral Care', icon: ShieldCheck },
+    { label: 'Toothpastes & Oral Care', displayName: '🪥 Toothpastes & Oral Care', icon: ShieldCheck },
     { label: 'Skincare', displayName: '✨ Skincare & Sunscreens', icon: Sparkle },
     { label: 'Fruits & Vegetables', displayName: '🍎 Fresh Produce', icon: Apple }
   ],
@@ -109,8 +110,9 @@ const SECTOR_SUBCATEGORIES: Record<MainSector, { label: CategoryType; displayNam
   ],
   PERSONAL_CARE: [
     { label: 'PERSONAL_CARE', displayName: 'All in PERSONAL_CARE (Top 20)', icon: ShieldCheck },
-    { label: 'Haircare', displayName: '🧴 Shampoos & Hair Colors', icon: Sparkles },
     { label: 'Personal Care', displayName: '🧼 Soaps & Oral Care', icon: ShieldCheck },
+    { label: 'Toothpastes & Oral Care', displayName: '🪥 Toothpastes & Oral Care', icon: ShieldCheck },
+    { label: 'Haircare', displayName: '🧴 Shampoos & Hair Colors', icon: Sparkles },
     { label: 'Skincare', displayName: '✨ Moisturizers & Sunscreens', icon: Sparkle }
   ]
 };
@@ -347,6 +349,83 @@ export const App: React.FC = () => {
           );
         })}
       </div>
+
+      {/* Row 3: Contextual Subcategory Filter Pills */}
+      {(selectedCategory === 'Personal Care' || selectedCategory === 'Toothpastes & Oral Care' || selectedCategory === 'Soaps') && (
+        <div className="pt-2 border-t border-stone-100 flex items-center gap-1.5 sm:gap-2 overflow-x-auto custom-scrollbar pb-1">
+          <span className="text-[10px] font-bold text-stone-500 flex-shrink-0 uppercase tracking-wider">
+            Filter:
+          </span>
+          <button
+            onClick={() => setSelectedCategory('Personal Care')}
+            className={`flex-shrink-0 flex items-center gap-1 px-2.5 py-1 rounded-lg text-[10px] sm:text-[11px] font-extrabold transition-all ${
+              selectedCategory === 'Personal Care'
+                ? 'bg-[#173D35] text-white shadow-xs'
+                : 'bg-stone-100 text-stone-700 hover:bg-stone-200 border border-stone-200/50'
+            }`}
+          >
+            <span>All Soaps & Oral Care (39)</span>
+          </button>
+          <button
+            onClick={() => setSelectedCategory('Toothpastes & Oral Care')}
+            className={`flex-shrink-0 flex items-center gap-1 px-2.5 py-1 rounded-lg text-[10px] sm:text-[11px] font-extrabold transition-all ${
+              selectedCategory === 'Toothpastes & Oral Care'
+                ? 'bg-[#173D35] text-white shadow-xs'
+                : 'bg-stone-100 text-stone-700 hover:bg-stone-200 border border-stone-200/50'
+            }`}
+          >
+            <span>🪥 Toothpastes & Oral Care (19)</span>
+          </button>
+          <button
+            onClick={() => setSelectedCategory('Soaps')}
+            className={`flex-shrink-0 flex items-center gap-1 px-2.5 py-1 rounded-lg text-[10px] sm:text-[11px] font-extrabold transition-all ${
+              selectedCategory === 'Soaps'
+                ? 'bg-[#173D35] text-white shadow-xs'
+                : 'bg-stone-100 text-stone-700 hover:bg-stone-200 border border-stone-200/50'
+            }`}
+          >
+            <span>🧼 Bathing Soaps & Bars (20)</span>
+          </button>
+        </div>
+      )}
+
+      {(selectedCategory === 'Haircare' || selectedCategory === 'Shampoos' || selectedCategory === 'Hair Color & Dyes') && (
+        <div className="pt-2 border-t border-stone-100 flex items-center gap-1.5 sm:gap-2 overflow-x-auto custom-scrollbar pb-1">
+          <span className="text-[10px] font-bold text-stone-500 flex-shrink-0 uppercase tracking-wider">
+            Filter:
+          </span>
+          <button
+            onClick={() => setSelectedCategory('Haircare')}
+            className={`flex-shrink-0 flex items-center gap-1 px-2.5 py-1 rounded-lg text-[10px] sm:text-[11px] font-extrabold transition-all ${
+              selectedCategory === 'Haircare'
+                ? 'bg-[#173D35] text-white shadow-xs'
+                : 'bg-stone-100 text-stone-700 hover:bg-stone-200 border border-stone-200/50'
+            }`}
+          >
+            <span>All Haircare (26)</span>
+          </button>
+          <button
+            onClick={() => setSelectedCategory('Shampoos')}
+            className={`flex-shrink-0 flex items-center gap-1 px-2.5 py-1 rounded-lg text-[10px] sm:text-[11px] font-extrabold transition-all ${
+              selectedCategory === 'Shampoos'
+                ? 'bg-[#173D35] text-white shadow-xs'
+                : 'bg-stone-100 text-stone-700 hover:bg-stone-200 border border-stone-200/50'
+            }`}
+          >
+            <span>🧴 Shampoos (20)</span>
+          </button>
+          <button
+            onClick={() => setSelectedCategory('Hair Color & Dyes')}
+            className={`flex-shrink-0 flex items-center gap-1 px-2.5 py-1 rounded-lg text-[10px] sm:text-[11px] font-extrabold transition-all ${
+              selectedCategory === 'Hair Color & Dyes'
+                ? 'bg-[#173D35] text-white shadow-xs'
+                : 'bg-stone-100 text-stone-700 hover:bg-stone-200 border border-stone-200/50'
+            }`}
+          >
+            <span>🎨 Hair Color & Dyes (6)</span>
+          </button>
+        </div>
+      )}
     </div>
   );
 

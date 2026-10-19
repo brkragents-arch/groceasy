@@ -14,7 +14,13 @@ export type CategoryType =
   | 'Staples & Grocery' 
   | 'Skincare' 
   | 'Haircare' 
-  | 'Personal Care';
+  | 'Personal Care'
+  | 'Toothpastes & Oral Care'
+  | 'Soaps'
+  | 'Shampoos'
+  | 'Hair Color & Dyes'
+  | 'Moisturizers'
+  | 'Sunscreens';
 
 export type RiskLevel = 'green' | 'amber' | 'red' | 'grey';
 
