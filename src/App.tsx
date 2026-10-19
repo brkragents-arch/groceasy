@@ -259,7 +259,7 @@ export const App: React.FC = () => {
         {/* Desktop top bar to switch view or navigate */}
         <div className="bg-[#112d27] text-white px-4 sm:px-8 py-2 text-xs flex items-center justify-between border-b border-emerald-900/40 md:rounded-t-2xl mt-0 md:mt-2">
           <span className="text-emerald-300 font-semibold flex items-center gap-1.5">
-            <ShieldCheck className="w-4 h-4" /> Groceasy India • Formulation & Safety Analysis Report
+            <ShieldCheck className="w-4 h-4" /> <span className="font-brand font-black text-sm text-white">Groceasy</span> <span className="text-emerald-300 font-sans">India • Formulation & Safety Analysis Report</span>
           </span>
           <div className="flex items-center gap-2">
             <button
@@ -598,10 +598,10 @@ export const App: React.FC = () => {
                     <ShieldCheck className="w-5 h-5 text-emerald-400" />
                   </div>
                   <div>
-                    <h1 className="text-base font-black tracking-tight flex items-center gap-1">
-                      Groceasy <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">India</span>
+                    <h1 className="text-lg font-black tracking-tight flex items-center gap-1.5 font-brand text-white">
+                      Groceasy <span className="font-sans text-[10px] font-bold px-1.5 py-0.2 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">India</span>
                     </h1>
-                    <p className="text-[10px] text-emerald-100/70">Food, Grocery & Cosmetics Safety</p>
+                    <p className="text-[10px] text-emerald-100/70 font-sans">Clean Food, Grocery & Cosmetics Safety</p>
                   </div>
                 </div>
 
@@ -798,10 +798,10 @@ export const App: React.FC = () => {
                 <ShieldCheck className="w-7 h-7 text-emerald-400" />
               </div>
               <div>
-                <h1 className="text-xl sm:text-2xl font-black tracking-tight flex items-center gap-2">
-                  Groceasy <span className="text-xs px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-semibold border border-emerald-400/30">India</span>
+                <h1 className="text-2xl sm:text-3xl font-black tracking-tight flex items-center gap-2 font-brand text-white">
+                  Groceasy <span className="font-sans text-xs px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-bold border border-emerald-400/30">India</span>
                 </h1>
-                <p className="text-xs text-emerald-100/70 font-medium">Clean Food, Pure Grocery & Non-Toxic Cosmetics</p>
+                <p className="text-xs text-emerald-100/70 font-medium font-sans">Clean Food, Pure Grocery & Non-Toxic Cosmetics</p>
               </div>
             </div>
 

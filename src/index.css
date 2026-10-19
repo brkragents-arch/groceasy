@@ -1,4 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700;9..144,800;9..144,900&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap');
 @import "tailwindcss";
+
+/* Brand Typography for Groceasy - Wholesome, Clean Food & Organic Grocery Identity */
+.font-brand {
+  font-family: 'Fraunces', Georgia, serif;
+  font-optical-sizing: auto;
+  letter-spacing: -0.02em;
+}
 
 @layer base {
   :root {
