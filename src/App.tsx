@@ -260,8 +260,8 @@ export const App: React.FC = () => {
       <div className="min-h-screen bg-[#F8F9F7] px-0 md:px-[1in]">
         {/* Desktop top bar to switch view or navigate */}
         <div className="bg-[#112d27] text-white px-4 sm:px-8 py-2 text-xs flex items-center justify-between border-b border-emerald-900/40 md:rounded-t-2xl mt-0 md:mt-2">
-          <span className="text-emerald-300 font-semibold flex items-center gap-1.5">
-            <ShieldCheck className="w-4 h-4" /> <span className="font-brand font-black text-sm text-white">Groceasy</span> <span className="text-emerald-300 font-sans">India • Formulation & Safety Analysis Report</span>
+          <span className="text-emerald-300 font-semibold flex items-center gap-2">
+            <img src="/logo.png" alt="Groceasy Logo" className="w-5 h-5 object-contain rounded-md bg-white p-0.5 shadow-2xs" /> <span className="font-brand font-black text-sm text-white">Groceasy</span> <span className="text-emerald-300 font-sans">India • Formulation & Safety Analysis Report</span>
           </span>
           <div className="flex items-center gap-2">
             <button
@@ -673,10 +673,12 @@ export const App: React.FC = () => {
               {/* Mobile Header */}
               <header className="bg-[#173D35] text-white pt-8 pb-7 px-4 rounded-b-[2.5rem] shadow-md relative overflow-hidden">
               <div className="flex items-center justify-between mb-3.5">
-                <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-xl bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20">
-                    <ShieldCheck className="w-5 h-5 text-emerald-400" />
-                  </div>
+                <div className="flex items-center gap-2.5">
+                  <img
+                    src="/logo.png"
+                    alt="Groceasy Logo"
+                    className="w-10 h-10 object-contain rounded-xl bg-white p-0.5 shadow-sm border border-white/20 flex-shrink-0"
+                  />
                   <div>
                     <h1 className="text-lg font-black tracking-tight flex items-center gap-1.5 font-brand text-white">
                       Groceasy <span className="font-sans text-[10px] font-bold px-1.5 py-0.2 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">India</span>
@@ -873,10 +875,12 @@ export const App: React.FC = () => {
           {/* Top Brand Bar & Global Desktop Navigation */}
           <div className="flex items-center justify-between flex-wrap gap-4 border-b border-white/10 pb-4">
             {/* Logo */}
-            <div className="flex items-center gap-3">
-              <div className="w-11 h-11 rounded-2xl bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20 shadow-inner">
-                <ShieldCheck className="w-7 h-7 text-emerald-400" />
-              </div>
+            <div className="flex items-center gap-3.5">
+              <img
+                src="/logo.png"
+                alt="Groceasy Logo"
+                className="w-13 h-13 sm:w-14 sm:h-14 object-contain rounded-2xl bg-white p-1 shadow-md border border-white/20 flex-shrink-0"
+              />
               <div>
                 <h1 className="text-2xl sm:text-3xl font-black tracking-tight flex items-center gap-2 font-brand text-white">
                   Groceasy <span className="font-sans text-xs px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-bold border border-emerald-400/30">India</span>
